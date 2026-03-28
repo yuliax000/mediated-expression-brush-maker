@@ -1,0 +1,103 @@
+// find our elements
+const stageContainer = document.getElementById("stage-container");
+const circleButton = document.getElementById("circleButton");
+// find stage width
+let stageContainerWidth = stageContainer.offsetWidth;
+console.log(stageContainerWidth);
+
+// find stage height
+let stageContainerHeight = stageContainer.offsetHeight;
+console.log(stageContainerHeight);
+
+// set default circle color
+let circleColor = "red";
+
+
+// create the konva stage
+const stage = new Konva.Stage({
+  container: "konva-stage",
+  width: stageContainerWidth,
+  height: stageContainerHeight,
+  fill: "blue",
+});
+// create layer
+const firstLayer = new Konva.Layer();
+
+// add layer to our stage
+stage.add(firstLayer);
+
+//add interaction to button
+function drawNewCircle() {
+  const circle = new Konva.Circle({
+    x: stage.width() * Math.random(),
+    y: stage.height() * Math.random(),
+    radius: 50 * Math.random(),
+    fill: circleColor,
+  });
+  // add a circle to first layer,
+  firstLayer.add(circle);
+}
+
+circleButton.addEventListener("click",drawNewCircle);
+
+//drawing feature
+//feature analysis
+//user goals: trying to draw a picture
+//represented model: cursor on the canvas: defined canvas : brush select : brush on?
+//color? or would that be its own system?
+// how does it behave?
+// move our cursor onto canvas, press mouse button down, move mouse, release mouse button
+//implemented model: create a new line when mouse button down, add to that line when mouse move
+//interact with other features:
+//color, image for the brush, eraser, uploaded image
+
+
+// keep track of when button is held
+let isDrawing = false;
+let lastLine;
+
+
+
+//user presses mouse button
+function drawMouseDown(){
+isDrawing = true;
+const pos = stage.getPointerPosition();
+lastLine = new Konva.Line({
+  stroke:"coral",
+  strokeWidth: 5,
+  lineCap: "round",
+  lineJoin: "round",
+  points: [pos.x, pos.y, pos.x, pos.y]
+})
+  firstLayer.add(lastLine);
+}
+
+// add function to mousedown event
+stage.on("mousedown", drawMouseDown);
+
+//user moves their mouse
+function drawMouseMove(){
+// dont run if not drawing
+  if (isDrawing === false) {
+    return;
+  }
+  // if isdrawing is true
+  const pos = stage.getPointerPosition();
+  let newPoints = lastLine.points().concat([pos.x, pos.y]);
+  lastLine.points(newPoints);
+}
+
+// add function to mousemove event
+stage.on ("mousemove", drawMouseMove);
+
+
+//user releases mouse button
+function drawMouseUp(){
+isDrawing = false;
+
+
+}
+// add function to mouseup event
+stage.on("mouseup", drawMouseUp);
+
+window.addEventListener("mouseup", drawMouseUp);

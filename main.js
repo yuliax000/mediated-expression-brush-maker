@@ -1,0 +1,1 @@
+const stageContainer = document.getElementById("stage-container");

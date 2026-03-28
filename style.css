@@ -1,0 +1,11 @@
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.stageContainer {
+  background-color: cornflowerblue;
+  flex: 1;
+  cursor:crosshair;
+}
