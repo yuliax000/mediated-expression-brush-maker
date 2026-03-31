@@ -1,11 +1,79 @@
+:root{
+  --col01: black;
+  --col02: white;
+  --col03: #46425e;
+  --col04: #15788c;
+  --col05: #00b9be;
+  --col06: #ffeecc;
+  --col07: #ffb0a3;
+  --col08: #ff6973;
+  --border: dashed 0.2rem var(--col03)
+}
+
+@media (prefers-color-scheme: dark){
+ :root {
+   --col01: white;
+   --col02: black;
+
+ }
+}
+
+
+
 main {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: var(--col02);
 }
 
 .stageContainer {
-  background-color: cornflowerblue;
+  background-color: var(--col03);
+  display:flex;
+
   flex: 1;
   cursor:crosshair;
+  justify-content: space-around;
+
+}
+
+button {
+
+  color:var(--col01);
+  background-color: var(--col02);
+  border: var(--border);
+}
+
+.canvasContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 3rem 3rem;
+  background-color: var(--col06);
+
+
+}
+
+.functionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 3rem;
+  background-color: var(--col06);
+}
+
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding:2rem;
+  background-color: var(--col07);
+}
+
+.toolbarContainer{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--col07);
 }
