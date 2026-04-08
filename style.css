@@ -77,3 +77,9 @@ button {
   flex-direction: column;
   background-color: var(--col07);
 }
+
+.canvas {
+  width: 600px;
+  height: 600px;
+  background-color: var(--col02);
+}
