@@ -1,6 +1,7 @@
 // reference link: https://konvajs.org/docs/sandbox/Free_Drawing.html
 // find elements
-const toolSelection = document.getElementById("tools");
+// 1. draw manually method (from konva.js website https://konvajs.org/docs/sandbox/Free_Drawing.html)
+const toolSelection = document.getElementById("toolSelect");
 const toolbar = document.getElementById("toolbar");
 
 toolSelection.innerHTML = `
@@ -36,9 +37,16 @@ layer.add(image);
 
 // get brush
 const context = canvas.getContext("2d");
-context.strokeStyle = "var(--col01)";
-context.lineJoin = "round"
-context.lineWidth = 5;
+
+// get rid of original drawing, change to use image as brush
+
+// context.strokeStyle = "var(--col01)";
+// context.lineJoin = "round"
+// context.lineWidth = 5;
+
+const brushImage = new Image();
+brushImage.src = "assets/original.png";
+
 
 let isPaint = false;
 let lastPointerPosition;
@@ -47,6 +55,12 @@ let mode = "brush";
 image.on("mousedown touchstart", function(){
  isPaint = true;
  lastPointerPosition = stage.getPointerPosition();
+//  test if I can use image to stamp
+//     if (mode === "brush") {
+//         const pos = stage.getPointerPosition();
+//         context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
+//         layer.batchDraw();
+//     }
 })
 
 stage.on("mouseup touchend", function(){
@@ -54,5 +68,75 @@ stage.on("mouseup touchend", function(){
 })
 
 stage.on("mousemove touchmove", function(){
-    if(!isPaint){}
+    if(!isPaint){
+        return;
+    }
+  const pos = stage.getPointerPosition()
+
+    if (mode === "brush") {
+        // 1.original manually drawing method
+        // context.globalCompositeOperation = "source-over";
+
+        // 2. using brushImage as stamp to draw
+        // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
+        stampBrush(lastPointerPosition, pos, brushImage, 60);
+
+    }
+    if (mode === "eraser") {
+        // 1. original eraser
+        // context.globalCompositeOperation = "destination-out";
+        context.clearRect(pos.x - 20, pos.y - 20, 40, 40);
+    }
+
+    // 1. original manually drawing method
+    // context.beginPath();
+    //
+    // const localPos = {
+    //     x: lastPointerPosition.x - image.x(),
+    //     y: lastPointerPosition.y - image.y(),
+    // }
+    // context.moveTo(localPos.x, localPos.y);
+    // const pos = stage.getPointerPosition();
+    // const newLocalPos = {
+    //     x: pos.x - image.x(),
+    //     y: pos.y - image.y(),
+    // }
+    // context.lineTo(newLocalPos.x, newLocalPos.y);
+    // context.closePath();
+    // context.stroke();
+    //
+    lastPointerPosition = pos;
+
+    layer.batchDraw();
 })
+
+toolSelection.addEventListener("change", function(){
+    mode = toolSelection.value;
+})
+
+// write functions to calculate the distance and angle
+function getDistance(point1, point2){
+    const dx = point2.x - point1.x;
+    const dy = point2.y - point1.y;
+    return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+}
+
+function getAngle(point1, point2) {
+    const dx = point2.x - point1.x;
+    const dy = point2.y - point1.y;
+    return Math.atan2(dy,dx);
+}
+
+function stampBrush(start, end, brushSource, size) {
+    const distance = getDistance(start, end);
+    const angle = getAngle(start, end);
+
+    for (let z = 0; z < distance; z ++){
+        const x = start.x + Math.cos(angle) * z - size / 2;
+        const y = start.y + Math.sin(angle) * z - size / 2;
+
+        context.drawImage(brushSource, x, y, size, size);
+    }
+}
+
+
