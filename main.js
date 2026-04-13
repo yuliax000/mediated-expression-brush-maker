@@ -45,16 +45,36 @@ const context = canvas.getContext("2d");
 // context.lineWidth = 5;
 
 const brushImage = new Image();
+
+// to test if using image as brush source works
 brushImage.src = "assets/original.png";
+
+// create a new canvas containing canvas picture as brush canvas
+const brushCanvas = document.createElement("canvas");
+const brushContext = brushCanvas.getContext("2d");
+
+const brushSize = 40;
+brushCanvas.width = brushSize;
+brushCanvas.height = brushSize;
 
 
 let isPaint = false;
 let lastPointerPosition;
-let mode = "brush";
+// If I use generative brush at the start, it will capture blank canvas to draw,
+// there will be nothing appears on canvas.
+// Therefore, I decide to prepare two mode for users to switch. They can decide to turn on or off the generative mode.
+
+let drawMode = "brush";
+let brushMode = "default";
+
+// the drawing will start after there is something on the canvas.
+let hasCanvasContent = false;
+let currentBrushsource;
 
 image.on("mousedown touchstart", function(){
- isPaint = true;
- lastPointerPosition = stage.getPointerPosition();
+    updateBrushFromCurrentCanvas()
+    isPaint = true;
+    lastPointerPosition = stage.getPointerPosition();
 //  test if I can use image to stamp
 //     if (mode === "brush") {
 //         const pos = stage.getPointerPosition();
@@ -62,6 +82,8 @@ image.on("mousedown touchstart", function(){
 //         layer.batchDraw();
 //     }
 })
+
+
 
 stage.on("mouseup touchend", function(){
     isPaint = false;
@@ -73,16 +95,17 @@ stage.on("mousemove touchmove", function(){
     }
   const pos = stage.getPointerPosition()
 
-    if (mode === "brush") {
+    if (drawMode === "brush") {
         // 1.original manually drawing method
         // context.globalCompositeOperation = "source-over";
 
         // 2. using brushImage as stamp to draw
         // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
-        stampBrush(lastPointerPosition, pos, brushImage, 60);
+        stampBrush(lastPointerPosition, pos, brushCanvas, 40);
+
 
     }
-    if (mode === "eraser") {
+    if (drawMode === "eraser") {
         // 1. original eraser
         // context.globalCompositeOperation = "destination-out";
         context.clearRect(pos.x - 20, pos.y - 20, 40, 40);
@@ -137,6 +160,19 @@ function stampBrush(start, end, brushSource, size) {
 
         context.drawImage(brushSource, x, y, size, size);
     }
+}
+
+
+// I found this drawImage way to update brush is more straight forward than 'save, then load'.
+// because it doesn't have the loading process.
+// I plan to use toDataUrl while I'm building my brush library.
+function updateBrushFromCurrentCanvas(){
+    brushContext.clearRect(0, 0, brushCanvas.width, brushCanvas.height);
+    brushContext.drawImage(
+        canvas,
+        0,0, canvas.width, canvas.height,
+        0,0,brushCanvas.width,brushCanvas.height
+    )
 }
 
 

@@ -7,7 +7,7 @@
   --col06: #ffeecc;
   --col07: #ffb0a3;
   --col08: #ff6973;
-  --border: dashed 0.2rem var(--col03)
+  --border: solid 0.1rem var(--col03)
 }
 
 @media (prefers-color-scheme: dark){
@@ -42,6 +42,8 @@ button {
   color:var(--col01);
   background-color: var(--col02);
   border: var(--border);
+  font-size: 0.8rem;
+  padding:0.3rem;
 }
 
 .canvasContainer {
@@ -49,7 +51,8 @@ button {
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-start;
-  padding: 3rem 3rem;
+  padding: 1rem 1rem;
+  gap: 1rem;
   background-color: var(--col06);
 
 
@@ -79,7 +82,30 @@ button {
 }
 
 .canvas {
-  width: 600px;
-  height: 600px;
+  width: 580px;
+  height: 580px;
   background-color: var(--col02);
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+}
+
+.modeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap:0.5rem;
+}
+
+.saveContainer{
+  display: flex;
+  justify-content: flex-end;
 }
