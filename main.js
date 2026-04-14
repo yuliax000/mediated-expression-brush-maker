@@ -1,18 +1,21 @@
 // reference link: https://konvajs.org/docs/sandbox/Free_Drawing.html
 // find elements
 // 1. draw manually method (from konva.js website https://konvajs.org/docs/sandbox/Free_Drawing.html)
-const toolSelection = document.getElementById("toolSelect");
-const toolbar = document.getElementById("toolbar");
 
-toolSelection.innerHTML = `
-<option value = "brush">Brush</option>
-<option value="eraser">Eraser</option>`;
+// The original tutorial used a select dropdown as the tool option,
+// but I changed it to buttons because buttons can display the options more intuitively.
 
-toolbar.appendChild(toolSelection);
+const brushBtn = document.getElementById("brushBtn");
+const eraserBtn = document.getElementById("eraserBtn");
+const defaultModeBtn = document.getElementById("defaultModeBtn");
+const generativeModeBtn = document.getElementById("generativeModeBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+
 
 // define canvas size
-const width = 600;
-const height = 600;
+const width = 580;
+const height = 580;
 
 // adding stage and layer
 const stage = new Konva.Stage({
@@ -44,19 +47,28 @@ const context = canvas.getContext("2d");
 // context.lineJoin = "round"
 // context.lineWidth = 5;
 
-const brushImage = new Image();
+const defaultBrushImage = new Image();
 
 // to test if using image as brush source works
-brushImage.src = "assets/original.png";
+defaultBrushImage.src = "assets/defaultBrushSmall.png";
 
 // create a new canvas containing canvas picture as brush canvas
 const brushCanvas = document.createElement("canvas");
 const brushContext = brushCanvas.getContext("2d");
 
-const brushSize = 40;
-brushCanvas.width = brushSize;
-brushCanvas.height = brushSize;
 
+// note: add slider to change brush and eraser size for final UI
+let brushSize = 40;
+//  to make brush preview clearer
+let brushCanvasResolution = 120;
+
+
+
+brushCanvas.width = brushCanvasResolution;
+brushCanvas.height = brushCanvasResolution;
+
+let eraserSize = 400;
+let eraserSource = defaultBrushImage;
 
 let isPaint = false;
 let lastPointerPosition;
@@ -69,25 +81,75 @@ let brushMode = "default";
 
 // the drawing will start after there is something on the canvas.
 let hasCanvasContent = false;
-let currentBrushsource;
+let currentBrushSource = defaultBrushImage;
+
+// add click events to buttons
+brushBtn.addEventListener("click", () => {
+    drawMode = "brush";
+})
+eraserBtn.addEventListener("click", () => {
+    drawMode = "eraser";
+})
+defaultModeBtn.addEventListener("click", () => {
+    brushMode = "default";
+    syncBrushPreview();
+})
+generativeModeBtn.addEventListener("click", () => {
+    brushMode = "generative";
+    syncBrushPreview();
+})
+
+clearBtn.addEventListener("click", () => {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    hasCanvasContent = false;
+    layer.batchDraw();
+})
+
+
+//procedure: mousedown - default brush drawing - new canvas created - drawImage()
+
 
 image.on("mousedown touchstart", function(){
-    updateBrushFromCurrentCanvas()
+   updateCurrentBrushSource();
+
     isPaint = true;
     lastPointerPosition = stage.getPointerPosition();
+    if (!lastPointerPosition) return;
+
+    if(drawMode === "brush") {
+        stampSingle(lastPointerPosition, currentBrushSource, brushSize, "draw");
+        hasCanvasContent = true;
+    }
+
+    if(drawMode === "eraser") {
+        stampSingle(lastPointerPosition, eraserSource, eraserSize, "erase");
+
+    }
+
+
 //  test if I can use image to stamp
 //     if (mode === "brush") {
 //         const pos = stage.getPointerPosition();
 //         context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
 //         layer.batchDraw();
 //     }
+    layer.batchDraw()
 })
 
 
 
 stage.on("mouseup touchend", function(){
+    if (isPaint && drawMode === "brush") {
+        hasCanvasContent = true;
+        if(brushMode === "generative") {
+            updateBrushFromCurrentCanvas();
+            currentBrushSource = brushCanvas;
+            updateBrushPreview(currentBrushSource);
+        }
+
+    }
     isPaint = false;
-})
+});
 
 stage.on("mousemove touchmove", function(){
     if(!isPaint){
@@ -101,14 +163,15 @@ stage.on("mousemove touchmove", function(){
 
         // 2. using brushImage as stamp to draw
         // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
-        stampBrush(lastPointerPosition, pos, brushCanvas, 40);
+        stampBrush(lastPointerPosition, pos, currentBrushSource, brushSize, "draw");
 
 
     }
     if (drawMode === "eraser") {
+        stampBrush(lastPointerPosition, pos, eraserSource, eraserSize, "erase");
         // 1. original eraser
         // context.globalCompositeOperation = "destination-out";
-        context.clearRect(pos.x - 20, pos.y - 20, 40, 40);
+
     }
 
     // 1. original manually drawing method
@@ -133,9 +196,17 @@ stage.on("mousemove touchmove", function(){
     layer.batchDraw();
 })
 
-toolSelection.addEventListener("change", function(){
-    mode = toolSelection.value;
-})
+// get a preview window. idea: create a new small canvas to show current main canvas container.
+const previewCanvas = document.getElementById("previewCanvas");
+const previewContext = previewCanvas.getContext("2d");
+
+
+defaultBrushImage.onload = function(){
+    syncBrushPreview();
+}
+
+previewContext.imageSmoothingEnabled = false;
+
 
 // write functions to calculate the distance and angle
 function getDistance(point1, point2){
@@ -150,16 +221,25 @@ function getAngle(point1, point2) {
     return Math.atan2(dy,dx);
 }
 
-function stampBrush(start, end, brushSource, size) {
+function stampBrush(start, end, brushSource, size, mode = "draw") {
     const distance = getDistance(start, end);
     const angle = getAngle(start, end);
 
-    for (let z = 0; z < distance; z ++){
+     context.save()
+
+    if (mode === "erase") {
+        context.globalCompositeOperation = "destination-out";
+    } else {
+        context.globalCompositeOperation = "source-over";
+    }
+
+    for (let z = 0; z < distance; z += 1.5){
         const x = start.x + Math.cos(angle) * z - size / 2;
         const y = start.y + Math.sin(angle) * z - size / 2;
 
         context.drawImage(brushSource, x, y, size, size);
     }
+    context.restore();
 }
 
 
@@ -175,4 +255,51 @@ function updateBrushFromCurrentCanvas(){
     )
 }
 
+// Users can stamp a picture by clicking the mouse
+// therefore they can create brushes by creating points (more expressive)
+function stampSingle(point, brushSource, size, mode = "draw"){
+    context.save();
+    const x = point.x - size/2;
+    const y = point.y - size/2;
 
+    if(mode === "erase"){
+        context.globalCompositeOperation = "destination-out";
+    } else {
+        context.globalCompositeOperation = "source-over";
+    }
+
+    context.drawImage(brushSource,x, y, size, size);
+    context.restore();
+}
+
+// preview function
+function updateBrushPreview(source) {
+    previewContext.clearRect(0,0,previewCanvas.width, previewCanvas.height);
+    const previewSize= 80;
+    const x = (previewCanvas.width - previewSize) / 2;
+    const y = (previewCanvas.height - previewSize) / 2;
+
+    previewContext.drawImage(source, x,y, previewSize, previewSize);
+}
+
+// I need the preview window change as I change brush mode,
+// so I write a function to update brush source separately
+// then I can use this function in click events
+function updateCurrentBrushSource(){
+    if (brushMode === "default"){
+        currentBrushSource = defaultBrushImage;
+    }
+    if (brushMode === "generative"){
+        if (hasCanvasContent) {
+            updateBrushFromCurrentCanvas()
+            currentBrushSource = brushCanvas;
+        } else{
+            currentBrushSource = defaultBrushImage;
+        }
+    }
+}
+
+function syncBrushPreview(){
+    updateCurrentBrushSource();
+    updateBrushPreview(currentBrushSource);
+}
