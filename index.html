@@ -12,6 +12,26 @@
 <body>
 <main>
 
+<dialog class="startGuide" id="startGuide">
+    <p>Hello! This is a brush-making website.</p>
+    <p>Try drawing a circle on the canvas,</p>
+    <p>then click “Generative Mode” in the top right to discover what happens! </p>
+    <p>Default Mode provides a circular brush. </p>
+    <p>Start creating your own brushes!</p>
+    <button class="closeDialog" id="closeDialog"> OK </button>
+</dialog>
+
+    <dialog class="guideDialog" id="guideDialog">
+        <button id="closeGuide" class="closeGuide">✖</button>
+        <h3>Guide</h3>
+        <p>Click → Stamp </p>
+        <p>Drag → Draw</p>
+        <p>Default Mode → Circular brush</p>
+        <p>Generative Mode → Evolving brush</p>
+    </dialog>
+
+
+
 <div class="stageContainer" id="stageContainer">
 
 
@@ -32,8 +52,10 @@
 
 <div class="mainContainer" id="mainContainer">
     <div class="modeContainer" id="modeContainer">
+        <button id="guide" class="guide">Guide</button>
         <button id="defaultModeBtn">Default Mode</button>
         <button id="generativeModeBtn">Generative Mode</button>
+
     </div>
     <div class="canvasContainer" id="canvasContainer">
     <div class="toolbarContainer" id="toolbarContainer">

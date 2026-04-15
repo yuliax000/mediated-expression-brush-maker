@@ -1,5 +1,35 @@
-// reference link: https://konvajs.org/docs/sandbox/Free_Drawing.html
-// find elements
+
+
+//I use a modal to guide users simply when first open the page.
+// A guide box that can be opened with a single click to provide more detailed instructions.
+
+// reason: 1. clear and simple
+//         2. Placed at the beginning, so it doesn’t interrupt the user experience.
+//         3. if users need help, they can find the instruction in the page manually,
+// providing options for users with different drawing experience.
+
+const startGuide = document.getElementById("startGuide");
+const closeDialog = document.getElementById("closeDialog");
+startGuide.showModal();
+
+closeDialog.addEventListener("click", () => {
+    startGuide.close();
+})
+
+
+const guideBtn = document.getElementById("guide");
+const guideDialog = document.getElementById("guideDialog");
+const closeGuide = document.getElementById("closeGuide");
+
+
+guideBtn.addEventListener("click", () => {
+    guideDialog.show();
+})
+
+closeGuide.addEventListener("click", () => {
+    guideDialog.close();
+})
+
 // 1. draw manually method (from konva.js website https://konvajs.org/docs/sandbox/Free_Drawing.html)
 
 // The original tutorial used a select dropdown as the tool option,
