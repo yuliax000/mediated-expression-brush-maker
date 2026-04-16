@@ -136,6 +136,12 @@ clearBtn.addEventListener("click", () => {
 })
 
 
+
+
+
+
+
+
 //procedure: mousedown - default brush drawing - new canvas created - drawImage()
 
 
@@ -251,6 +257,9 @@ function getAngle(point1, point2) {
     return Math.atan2(dy,dx);
 }
 
+
+let lastTime = performance.now();
+
 function stampBrush(start, end, brushSource, size, mode = "draw") {
     const distance = getDistance(start, end);
     const angle = getAngle(start, end);
@@ -263,12 +272,41 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
         context.globalCompositeOperation = "source-over";
     }
 
+    // Original version of generative brush.
     for (let z = 0; z < distance; z += 1.5){
         const x = start.x + Math.cos(angle) * z - size / 2;
         const y = start.y + Math.sin(angle) * z - size / 2;
 
         context.drawImage(brushSource, x, y, size, size);
     }
+
+
+    // I want to add some counter-intuitive mapping into the project.
+    // Faster drawing speed will cause denser pattern, while slower drawing speed create sparse result.
+    // I also  add some randomness to the tool.
+
+    // calculate the speed (doesn't work well, but keep it to see if I can refine it.)
+
+    // let now = performance.now();
+    // let time = Math.max(1, now - lastTime);
+    // lastTime = now;
+
+    // let speed= (distance / time) * 20;
+
+
+    // let step = Math.max(2, 12 - distance * 0.8);
+
+    // spray tool
+    // for (let z = 0; z < distance; z += 1.5){
+    //     const x = start.x + Math.cos(angle) * z - size / 2 + (Math.random() - 0.5) * 10;
+    //     const y = start.y + Math.sin(angle) * z - size / 2 + (Math.random() - 0.5) * 10;
+    //
+    //     context.drawImage(brushSource, x, y, size, size);
+    // }
+
+
+
+
     context.restore();
 }
 
