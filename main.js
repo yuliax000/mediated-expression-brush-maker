@@ -104,7 +104,9 @@ let isPaint = false;
 let lastPointerPosition;
 // If I use generative brush at the start, it will capture blank canvas to draw,
 // there will be nothing appears on canvas.
-// Therefore, I decide to prepare two mode for users to switch. They can decide to turn on or off the generative mode.
+// Therefore, I decide to prepare two mode for users to switch. Users can decide to turn on or off the generative mode.
+// The problem is, if users do not click generative mode, they may not find the core feature of this tool.
+// I might need to make the generative mode button more obvious while refining UI.
 
 let drawMode = "brush";
 let brushMode = "default";
@@ -180,6 +182,7 @@ stage.on("mouseup touchend", function(){
         if(brushMode === "generative") {
             updateBrushFromCurrentCanvas();
             currentBrushSource = brushCanvas;
+            // stop drawing then update the preview canvas, so that users can view current brush before their next draw
             updateBrushPreview(currentBrushSource);
         }
 
@@ -258,7 +261,7 @@ function getAngle(point1, point2) {
 }
 
 
-let lastTime = performance.now();
+// let lastTime = performance.now();
 
 function stampBrush(start, end, brushSource, size, mode = "draw") {
     const distance = getDistance(start, end);
@@ -281,7 +284,7 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
     }
 
 
-    // I want to add some counter-intuitive mapping into the project.
+    // I want to add some counter-intuitive mapping into the project. (is not clear)
     // Faster drawing speed will cause denser pattern, while slower drawing speed create sparse result.
     // I also  add some randomness to the tool.
 
@@ -311,7 +314,7 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
 }
 
 
-// I found this drawImage way to update brush is more straight forward than 'save, then load'.
+// I found this drawImage way to update brush is more straight forward than save, then load'.
 // because it doesn't have the loading process.
 // I plan to use toDataUrl while I'm building my brush library.
 function updateBrushFromCurrentCanvas(){
@@ -341,6 +344,7 @@ function stampSingle(point, brushSource, size, mode = "draw"){
 }
 
 // preview function
+// This function could be a clue of finding out the logic of this tool (maybe, need to test)
 function updateBrushPreview(source) {
     previewContext.clearRect(0,0,previewCanvas.width, previewCanvas.height);
     const previewSize= 80;
@@ -351,7 +355,7 @@ function updateBrushPreview(source) {
 }
 
 // I need the preview window change as I change brush mode,
-// so I write a function to update brush source separately
+// so I write a function to update brush source separately, not in the mousedown event.
 // then I can use this function in click events
 function updateCurrentBrushSource(){
     if (brushMode === "default"){
@@ -366,6 +370,7 @@ function updateCurrentBrushSource(){
         }
     }
 }
+
 
 function syncBrushPreview(){
     updateCurrentBrushSource();
