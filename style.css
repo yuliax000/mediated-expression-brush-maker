@@ -1,4 +1,4 @@
-:root{
+:root {
   --col01: black;
   --col02: white;
   --col03: #46425e;
@@ -7,18 +7,15 @@
   --col06: #ffeecc;
   --col07: #ffb0a3;
   --col08: #ff6973;
-  --border: solid 0.1rem var(--col03)
+  --border: solid 0.1rem var(--col03);
 }
 
-@media (prefers-color-scheme: dark){
- :root {
-   --col01: white;
-   --col02: black;
-
- }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --col01: white;
+    --col02: black;
+  }
 }
-
-
 
 main {
   display: flex;
@@ -29,21 +26,20 @@ main {
 
 .stageContainer {
   background-color: var(--col03);
-  display:flex;
+  display: flex;
 
   flex: 1;
-  cursor:crosshair;
+  cursor: crosshair;
   justify-content: space-around;
-
 }
 
 button {
   cursor: pointer;
-  color:var(--col01);
+  color: var(--col01);
   background-color: var(--col02);
   border: var(--border);
   font-size: 0.8rem;
-  padding:0.3rem;
+  padding: 0.3rem;
 }
 
 button:hover {
@@ -52,9 +48,8 @@ button:hover {
 }
 
 button:active {
-  color:var(--col01);
+  color: var(--col01);
   background-color: var(--col03);
-
 }
 
 .canvasContainer {
@@ -65,8 +60,6 @@ button:active {
   padding: 1rem 1rem;
   gap: 1rem;
   background-color: var(--col06);
-
-
 }
 
 .functionContainer {
@@ -82,16 +75,16 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  padding:1rem;
+  padding: 1rem;
   background-color: var(--col07);
 }
 
 .previewCanvas {
-  display:flex;
+  display: flex;
   background-color: white;
 }
 
-.toolbarContainer{
+.toolbarContainer {
   display: flex;
   flex-direction: column;
   background-color: var(--col07);
@@ -100,13 +93,12 @@ button:active {
 .canvas {
   width: 580px;
   height: 580px;
-  background-color: white;
+  background-color: var(--col02);
 }
 
 .mainContainer {
   display: flex;
   flex-direction: column;
-
 }
 
 .tools {
@@ -118,18 +110,18 @@ button:active {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap:0.5rem;
+  gap: 0.5rem;
 }
 
-.saveContainer{
+.saveContainer {
   display: flex;
   justify-content: flex-end;
 }
 
-dialog[open]{
-  margin:auto;
-  padding:1rem;
-  display:flex;
+dialog[open] {
+  margin: auto;
+  padding: 1rem;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -137,11 +129,11 @@ dialog[open]{
   z-index: 99;
 }
 
-.closeDialog{
+.closeDialog {
   cursor: pointer;
 }
 
-.guide{
+.guide {
   position: absolute;
   top: 1rem;
   left: 1rem;
@@ -152,7 +144,7 @@ dialog[open]{
   color: var(--col03);
   cursor: pointer;
 }
-.guideDialog{
+.guideDialog {
   position: absolute;
   top: 4rem;
   left: 1rem;
@@ -166,7 +158,7 @@ dialog[open]{
   box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
 }
 
-.guideDialog::backdrop{
+.guideDialog::backdrop {
   background: transparent;
 }
 
@@ -179,5 +171,3 @@ dialog[open]{
   font-size: 1rem;
   cursor: pointer;
 }
-
-
