@@ -252,3 +252,30 @@ justify-content: start;
   opacity: 1;
   pointer-events: auto;
 }
+
+input[type="range"] {
+  writing-mode: vertical-lr;
+  appearance: slider-vertical;
+  direction:rtl;
+
+}
+
+.sliderContainer {
+  display: flex;
+  flex-direction: row;
+  gap:2rem;
+}
+
+.sizeControl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1rem;
+}
+
+.opacityControl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1rem;
+}

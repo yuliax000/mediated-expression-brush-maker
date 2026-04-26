@@ -66,6 +66,21 @@
                 <button id="brushBtn">Brush</button>
                 <button id="eraserBtn">Eraser</button>
                 <button id="clearBtn">Clean Canvas</button>
+                <div class="sliderContainer">
+                    <div class="sizeControl">
+                        <label id="sizeLabel">Size</label>
+                        <input type="range" id="sizeSlider" min="5" max="400" value="40">
+                        <!-- I decide to add a text showing value because that allows users changing the size precisely-->
+                        <span id="sizeValue">40</span>
+
+                    </div>
+                    <div class="opacityControl">
+                        <label id="opacityLabel">Opacity</label>
+                        <input type="range" id="opacitySlider" min="0" max="1" step="0.01" value="1">
+                        <span id="opacityValue">1</span>
+                    </div>
+                </div>
+
             </div>
         </div>
 

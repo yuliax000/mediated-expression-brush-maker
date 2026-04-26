@@ -97,8 +97,23 @@ let brushCanvasResolution = 120;
 brushCanvas.width = brushCanvasResolution;
 brushCanvas.height = brushCanvasResolution;
 
-let eraserSize = 400;
+let eraserSize = 80;
 // let eraserSource = defaultBrushImage;
+
+// opacity adjusting function
+let brushOpacity = 1;
+let eraserOpacity = 1;
+
+const sizeSlider=document.getElementById("sizeSlider");
+const opacitySlider=document.getElementById("opacitySlider");
+
+const sizeValue = document.getElementById("sizeValue");
+const opacityValue = document.getElementById("opacityValue");
+
+
+
+
+
 
 let isPaint = false;
 let lastPointerPosition;
@@ -118,9 +133,11 @@ let currentBrushSource = defaultBrushImage;
 // add click events to buttons
 brushBtn.addEventListener("click", () => {
     drawMode = "brush";
+    syncToolSliders();
 })
 eraserBtn.addEventListener("click", () => {
     drawMode = "eraser";
+    syncToolSliders();
 })
 defaultModeBtn.addEventListener("click", () => {
     brushMode = "default";
@@ -273,8 +290,10 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
 
     if (mode === "erase") {
         context.globalCompositeOperation = "destination-out";
+        context.globalAlpha = eraserOpacity;
     } else {
         context.globalCompositeOperation = "source-over";
+        context.globalAlpha = brushOpacity;
     }
 
     // Original version of generative brush.
@@ -337,8 +356,10 @@ function stampSingle(point, brushSource, size, mode = "draw"){
 
     if(mode === "erase"){
         context.globalCompositeOperation = "destination-out";
+        context.globalAlpha = eraserOpacity;
     } else {
         context.globalCompositeOperation = "source-over";
+        context.globalAlpha = brushOpacity;
     }
 
     context.drawImage(brushSource,x, y, size, size);
@@ -516,4 +537,54 @@ function createDefaultBrushThumb(){
     brushLibrary.appendChild(img);
 }
 
+// slider function
+function syncToolSliders () {
+    if (drawMode === "brush") {
+        sizeSlider.value= brushSize;
+        opacitySlider.value= brushOpacity;
 
+        sizeValue.textContent = brushSize;
+        opacityValue.textContent = brushOpacity;
+    }
+    if(drawMode === "eraser"){
+        sizeSlider.value= eraserSize;
+        opacitySlider.value= eraserOpacity;
+
+        sizeValue.textContent = eraserSize;
+        opacityValue.textContent = eraserOpacity;
+
+
+    }
+
+}
+
+// Reference on Procreate, I only prepare two sliders so that the Interface is minimal and simple
+// When change tools, the slider will automatically change to adjust that tool.
+sizeSlider.addEventListener("input", function(){
+
+   if (drawMode === "brush"){
+       brushSize = Number(sizeSlider.value);
+       sizeValue.textContent = brushSize;
+   }
+
+   if(drawMode === "eraser"){
+       eraserSize = Number(sizeSlider.value);
+       sizeValue.textContent = eraserSize;
+   }
+
+})
+
+
+opacitySlider.addEventListener("input", function(){
+    if(drawMode === "brush"){
+        brushOpacity = Number(opacitySlider.value);
+        opacityValue.textContent = brushOpacity;
+    }
+
+    if(drawMode === "eraser"){
+        eraserOpacity = Number(opacitySlider.value);
+        opacityValue.textContent = eraserOpacity;
+    }
+})
+
+syncToolSliders();
