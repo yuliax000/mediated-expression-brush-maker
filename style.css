@@ -73,8 +73,9 @@ button:active {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 3rem;
+  flex: 0 0 320px;
+  align-items: center;
+  padding: 1rem;
   background-color: var(--col06);
 }
 
@@ -128,7 +129,7 @@ button:active {
 
 dialog[open]{
   margin:auto;
-  padding:1rem;
+  padding: 1rem;
   display:flex;
   flex-direction: column;
   justify-content: center;
@@ -180,4 +181,74 @@ dialog[open]{
   cursor: pointer;
 }
 
+.brushLibrary {
+  display: grid;
+  grid-template-columns: repeat(6, 2rem);
+  grid-auto-rows: 2rem;
+justify-content: start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  height: 15rem;
 
+  background-color: var(--col07);
+  border: 1px solid var(--col03);
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+}
+
+.brushItem {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background-color: white;
+  border: 1px solid var(--col05);
+  cursor: pointer;
+
+}
+.brushItem:hover {
+  border: 2px solid var(--col06);
+}
+
+.brushBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+
+
+.deleteBrushBtn {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.3rem;
+
+  width:13px;
+  height:13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  border: none;
+  border-radius: 50%;
+
+  padding: 0 ;
+  background-color: var(--col01);
+  color: var(--col02);
+
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+
+  font-size: 10px;
+
+  z-index: 2;
+}
+
+.brushBox:hover  .deleteBrushBtn {
+  opacity: 1;
+  pointer-events: auto;
+}

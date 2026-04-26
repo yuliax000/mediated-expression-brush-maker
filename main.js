@@ -98,7 +98,7 @@ brushCanvas.width = brushCanvasResolution;
 brushCanvas.height = brushCanvasResolution;
 
 let eraserSize = 400;
-let eraserSource = defaultBrushImage;
+// let eraserSource = defaultBrushImage;
 
 let isPaint = false;
 let lastPointerPosition;
@@ -160,7 +160,7 @@ image.on("mousedown touchstart", function(){
     }
 
     if(drawMode === "eraser") {
-        stampSingle(lastPointerPosition, eraserSource, eraserSize, "erase");
+        stampSingle(lastPointerPosition, currentBrushSource, eraserSize, "erase");
 
     }
 
@@ -171,7 +171,8 @@ image.on("mousedown touchstart", function(){
 //         context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
 //         layer.batchDraw();
 //     }
-    layer.batchDraw()
+    layer.batchDraw();
+    updateBrushPreview();
 })
 
 
@@ -207,7 +208,7 @@ stage.on("mousemove touchmove", function(){
 
     }
     if (drawMode === "eraser") {
-        stampBrush(lastPointerPosition, pos, eraserSource, eraserSize, "erase");
+        stampBrush(lastPointerPosition, pos, currentBrushSource, eraserSize, "erase");
         // 1. original eraser
         // context.globalCompositeOperation = "destination-out";
 
@@ -233,6 +234,7 @@ stage.on("mousemove touchmove", function(){
     lastPointerPosition = pos;
 
     layer.batchDraw();
+    updateBrushPreview();
 })
 
 // get a preview window. idea: create a new small canvas to show current main canvas container.
@@ -351,7 +353,9 @@ function updateBrushPreview(source) {
     const x = (previewCanvas.width - previewSize) / 2;
     const y = (previewCanvas.height - previewSize) / 2;
 
-    previewContext.drawImage(source, x,y, previewSize, previewSize);
+    previewContext.drawImage(canvas,
+        0,0, canvas.width, canvas.height,
+        0,0, previewCanvas.width, previewCanvas.height);
 }
 
 // I need the preview window change as I change brush mode,
@@ -365,10 +369,12 @@ function updateCurrentBrushSource(){
         if (hasCanvasContent) {
             updateBrushFromCurrentCanvas()
             currentBrushSource = brushCanvas;
+
         } else{
             currentBrushSource = defaultBrushImage;
         }
     }
+    else if (brushMode === "custom"){}
 }
 
 
@@ -376,3 +382,138 @@ function syncBrushPreview(){
     updateCurrentBrushSource();
     updateBrushPreview(currentBrushSource);
 }
+
+
+// Brush Library implementation
+// create and array----save brush to DataURL --- create thumbnails through dataURL---append them into library array
+// ---- set image to brush
+
+
+
+
+//Get the elements
+const saveToBrushBtn = document.getElementById("saveToBrush");
+const brushLibrary = document.getElementById("brushLibrary");
+
+//create arrays to contain the brush data
+let savedBrushes = [];
+
+// I add a default Brush into the brush library in order to guide users.
+
+const defaultBrushURL = "assets/defaultBrushSmall.png";
+
+saveToBrushBtn.addEventListener("click", function(){
+    saveBrushToLibrary();
+})
+loadBrushLibrary();
+
+setBrushFromImage(defaultBrushURL);
+
+
+function saveBrushToLibrary(){
+    const brushDataURL = brushCanvas.toDataURL();
+//     push saved brushes into array
+    savedBrushes.push(brushDataURL);
+
+//     save to local (to keep the data exist after refresh the website). [not sure if need this function or not]
+
+    localStorage.setItem("savedBrushes", JSON.stringify(savedBrushes));
+
+   loadBrushLibrary();
+
+}
+
+//function to create thumbnails for brushes
+
+
+function createBrushThumbnail(brushDataURL, index) {
+    const brushBox = document.createElement("div");
+    brushBox.classList.add("brushBox");
+    const brushImg = document.createElement("img");
+
+
+    brushImg.src = brushDataURL;
+    brushImg.classList.add("brushItem");
+    // adding a delete button for each saved brush, so that users can easily delete unwanted brushes.
+    // also this can avoid too much brush on the page
+    // use icon instead of text to make it more intuitive
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "✖";
+    deleteBtn.classList.add("deleteBrushBtn");
+
+    brushImg.addEventListener("click", function(){
+        setBrushFromImage(brushDataURL);
+
+    });
+
+    deleteBtn.addEventListener("click", function(event){
+        event.stopPropagation();
+        deleteBrush(index);
+    })
+    brushBox.appendChild(brushImg);
+    brushBox.appendChild(deleteBtn);
+
+    brushLibrary.appendChild(brushBox);
+}
+
+function deleteBrush(index){
+    savedBrushes.splice(index, 1);
+
+    localStorage.setItem ("savedBrushes", JSON.stringify(savedBrushes));
+
+    loadBrushLibrary();
+}
+
+
+
+
+function setBrushFromImage(brushDataURL){
+    const img = new Image();
+
+    img.onload = function(){
+        // clean canvas first
+        brushContext.clearRect(0,0,brushCanvas.width, brushCanvas.height);
+
+        brushContext.drawImage(
+            img,
+            0,
+            0,
+            brushCanvas.width,
+            brushCanvas.height
+        )
+        currentBrushSource = brushCanvas
+
+        updateBrushPreview(img);
+    }
+
+    img.src = brushDataURL;
+    brushMode = "custom";
+}
+
+// load the localStorage to avoid brushes disappearing after refresh the page.
+
+function loadBrushLibrary(){
+    brushLibrary.innerHTML = "";
+    createDefaultBrushThumb();
+
+    const storedBrushes = localStorage.getItem("savedBrushes");;
+    if (storedBrushes){
+        savedBrushes = JSON.parse(storedBrushes);
+        savedBrushes.forEach(function (brushDataURL, index
+        ) {
+            createBrushThumbnail(brushDataURL, index);
+        })
+    }
+}
+
+function createDefaultBrushThumb(){
+    const img = document.createElement("img");
+    img.src = defaultBrushURL;
+    img.classList. add("brushItem");
+    img.addEventListener("click", function(){
+        setBrushFromImage(defaultBrushURL);
+    })
+    brushLibrary.appendChild(img);
+}
+
+
