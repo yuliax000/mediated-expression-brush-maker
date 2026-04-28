@@ -40,6 +40,10 @@ const eraserBtn = document.getElementById("eraserBtn");
 const defaultModeBtn = document.getElementById("defaultModeBtn");
 const generativeModeBtn = document.getElementById("generativeModeBtn");
 const clearBtn = document.getElementById("clearBtn");
+const sprayBtn = document.getElementById("sprayBtn");
+const undoBtn = document.getElementById("undoBtn");
+const redoBtn = document.getElementById("redoBtn");
+
 
 
 
@@ -101,8 +105,8 @@ let eraserSize = 80;
 // let eraserSource = defaultBrushImage;
 
 // opacity adjusting function
-let brushOpacity = 1;
-let eraserOpacity = 1;
+let brushOpacity = 0.6;
+let eraserOpacity = 0.6;
 
 const sizeSlider=document.getElementById("sizeSlider");
 const opacitySlider=document.getElementById("opacitySlider");
@@ -130,6 +134,17 @@ let brushMode = "default";
 let hasCanvasContent = false;
 let currentBrushSource = defaultBrushImage;
 
+// define undo and redo container array
+let undoStack = [];
+let redoStack = [];
+let currentState = canvas.toDataURL();
+
+
+
+
+
+
+
 // add click events to buttons
 brushBtn.addEventListener("click", () => {
     drawMode = "brush";
@@ -148,6 +163,12 @@ generativeModeBtn.addEventListener("click", () => {
     syncBrushPreview();
 })
 
+sprayBtn.addEventListener("click", () => {
+    drawMode = "spray";
+    syncToolSliders();
+})
+
+
 clearBtn.addEventListener("click", () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     hasCanvasContent = false;
@@ -155,7 +176,13 @@ clearBtn.addEventListener("click", () => {
 })
 
 
+undoBtn.addEventListener("click", () => {
+    undoState();
+})
 
+redoBtn.addEventListener("click", () => {
+    redoState();
+})
 
 
 
@@ -165,6 +192,7 @@ clearBtn.addEventListener("click", () => {
 
 
 image.on("mousedown touchstart", function(){
+
    updateCurrentBrushSource();
 
     isPaint = true;
@@ -181,6 +209,11 @@ image.on("mousedown touchstart", function(){
 
     }
 
+    if (drawMode === "spray") {
+        sprayBrush(lastPointerPosition, currentBrushSource, brushSize,
+            100, Math.max(5, brushSize * 0.2), "draw")
+    }
+
 
 //  test if I can use image to stamp
 //     if (mode === "brush") {
@@ -195,6 +228,8 @@ image.on("mousedown touchstart", function(){
 
 
 stage.on("mouseup touchend", function(){
+
+
     if (isPaint && drawMode === "brush") {
         hasCanvasContent = true;
         if(brushMode === "generative") {
@@ -205,6 +240,8 @@ stage.on("mouseup touchend", function(){
         }
 
     }
+    saveCanvasState();
+    // updateBrushFromCurrentCanvas();
     isPaint = false;
 });
 
@@ -231,6 +268,12 @@ stage.on("mousemove touchmove", function(){
 
     }
 
+    if (drawMode === "spray") {
+        sprayLine(lastPointerPosition, pos, currentBrushSource,
+            brushSize, 100, Math.max(2, brushSize * 0.2),"draw"
+        )
+    }
+
     // 1. original manually drawing method
     // context.beginPath();
     //
@@ -251,7 +294,11 @@ stage.on("mousemove touchmove", function(){
     lastPointerPosition = pos;
 
     layer.batchDraw();
-    updateBrushPreview();
+
+    if (brushMode === "generative") {
+        updateBrushPreview(currentBrushSource);
+    }
+
 })
 
 // get a preview window. idea: create a new small canvas to show current main canvas container.
@@ -320,7 +367,7 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
 
     // let step = Math.max(2, 12 - distance * 0.8);
 
-    // spray tool
+    // spray tool/ not used.
     // for (let z = 0; z < distance; z += 1.5){
     //     const x = start.x + Math.cos(angle) * z - size / 2 + (Math.random() - 0.5) * 10;
     //     const y = start.y + Math.sin(angle) * z - size / 2 + (Math.random() - 0.5) * 10;
@@ -368,27 +415,32 @@ function stampSingle(point, brushSource, size, mode = "draw"){
 
 // preview function
 // This function could be a clue of finding out the logic of this tool (maybe, need to test)
-function updateBrushPreview(source) {
+function updateBrushPreview(source = currentBrushSource) {
     previewContext.clearRect(0,0,previewCanvas.width, previewCanvas.height);
     const previewSize= 80;
     const x = (previewCanvas.width - previewSize) / 2;
     const y = (previewCanvas.height - previewSize) / 2;
 
-    previewContext.drawImage(canvas,
-        0,0, canvas.width, canvas.height,
-        0,0, previewCanvas.width, previewCanvas.height);
+    previewContext.drawImage(source,
+        // 0,0, canvas.width, canvas.height,
+        // 0,0, previewCanvas.width, previewCanvas.height
+        x, y, previewSize, previewSize
+    );
 }
 
 // I need the preview window change as I change brush mode,
 // so I write a function to update brush source separately, not in the mousedown event.
 // then I can use this function in click events
 function updateCurrentBrushSource(){
+    // I made a change to default mode.
+    //The previous one is drawing through a default circle
+    // Now default mode means stop evolving the brush.(todo:change the button name after)
     if (brushMode === "default"){
-        currentBrushSource = defaultBrushImage;
+        currentBrushSource = currentBrushSource;
     }
     if (brushMode === "generative"){
         if (hasCanvasContent) {
-            updateBrushFromCurrentCanvas()
+            // updateBrushFromCurrentCanvas()
             currentBrushSource = brushCanvas;
 
         } else{
@@ -562,7 +614,7 @@ function syncToolSliders () {
 // When change tools, the slider will automatically change to adjust that tool.
 sizeSlider.addEventListener("input", function(){
 
-   if (drawMode === "brush"){
+   if (drawMode === "brush" || drawMode === "spray"){
        brushSize = Number(sizeSlider.value);
        sizeValue.textContent = brushSize;
    }
@@ -576,7 +628,7 @@ sizeSlider.addEventListener("input", function(){
 
 
 opacitySlider.addEventListener("input", function(){
-    if(drawMode === "brush"){
+    if(drawMode === "brush"|| drawMode === "spray"){
         brushOpacity = Number(opacitySlider.value);
         opacityValue.textContent = brushOpacity;
     }
@@ -587,4 +639,124 @@ opacitySlider.addEventListener("input", function(){
     }
 })
 
-syncToolSliders();
+
+
+
+
+
+// calculate the points between start and end point, then draw spray brush on these point
+    // I modified the stampBrush and stampSingle function to get spray tool.
+    // main inspiration is from https://dilshankelsen.com/adding-spray-tool-to-html5-canvas/
+    function sprayLine(start, end, brushSource, radius, density, particleSize, mode = "draw") {
+        const distance = getDistance(start, end);
+        const angle = getAngle(start, end);
+
+        const step = Math.max(1, radius * 0.3);
+
+        for (let z = 0; z < distance; z += step){
+            const point = {
+                x : start.x + Math.cos(angle) * z,
+                y : start.y + Math.sin(angle) * z
+            };
+
+            sprayBrush(point, brushSource, radius, density, particleSize, mode);
+            }
+        }
+
+
+        function sprayBrush(point, brushSource, radius, density, particleSize, mode = "draw"){
+            context.save();
+
+            if(mode === "erase"){
+                context.globalCompositeOperation = "destination-out";
+                context.globalAlpha = eraserOpacity;
+            } else {
+                context.globalCompositeOperation = "source-over";
+                context.globalAlpha = brushOpacity;
+            }
+
+            for (let i = 0; i < density; i ++){
+
+               // random angle
+                const angle = Math.random() * Math.PI * 2;
+        //       random distance from center to the point
+                const distance = Math.random() * radius;
+
+                const x = point.x + Math.cos(angle) * distance - particleSize / 2;
+                const y = point.y + Math.sin(angle) * distance - particleSize / 2;
+
+                context. drawImage(brushSource, x, y, particleSize, particleSize);
+
+            }
+            context.restore();
+        }
+
+        // building undo/redo function
+    function saveCanvasState() {
+        undoStack.push(currentState);
+        currentState = canvas.toDataURL();
+
+        redoStack = [];
+
+    }
+
+    function drawDataURLToCanvas(imgDataURL){
+      let img = new Image();
+      img.addEventListener("load", function drawOnLoad(){
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          layer.batchDraw();
+          updateBrushPreview();
+
+          img.removeEventListener("load", drawOnLoad);
+
+          img.remove();
+      })
+    img.src = imgDataURL;
+
+    }
+
+     function undoState() {
+    if(undoStack.length > 0){
+
+        redoStack.push(currentState);
+
+        let undoURL = undoStack.pop();
+        drawDataURLToCanvas(undoURL);
+
+        currentState = undoURL;
+    }
+     }
+
+     function redoState(){
+
+    if(redoStack.length > 0){
+
+        undoStack.push(currentState);
+
+        let redoURL = redoStack.pop();
+        drawDataURLToCanvas(redoURL);
+
+        currentState = redoURL;
+
+    }
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        syncToolSliders();
