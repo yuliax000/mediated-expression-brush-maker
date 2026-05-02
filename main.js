@@ -22,6 +22,7 @@ const guideDialog = document.getElementById("guideDialog");
 const closeGuide = document.getElementById("closeGuide");
 
 
+
 guideBtn.addEventListener("click", () => {
     guideDialog.show();
 })
@@ -43,6 +44,10 @@ const clearBtn = document.getElementById("clearBtn");
 const sprayBtn = document.getElementById("sprayBtn");
 const undoBtn = document.getElementById("undoBtn");
 const redoBtn = document.getElementById("redoBtn");
+const blackBtn = document.getElementById("blackBtn");
+const colorBtn = document.getElementById("colorBtn");
+const exportPngBtn = document.getElementById("export");
+
 
 
 
@@ -114,6 +119,22 @@ const opacitySlider=document.getElementById("opacitySlider");
 const sizeValue = document.getElementById("sizeValue");
 const opacityValue = document.getElementById("opacityValue");
 
+// add randomly changing color function. I choose a group of low-saturation colors,
+// because these colors won't be too distracting and harsh, creating a more comfortable experience.
+let currentColor = "#000000";
+
+
+const colorPalette = [
+    "#f2f0e5", "#b8b5b9","#868188", "#646365", "#45444f",
+    "#3a3858", "#212123", "#352b42", "#43436a", "#4b80ca",
+    "#68c2d3", "#a2dcc7", "#ede19e", "#d3a068", "#b45252",
+    "#6a536e", "#4b4158", "#80493a", "#a77b5b", "#e5ceb4",
+    "#c2d368", "#8ab060", "#567b79", "#4e584a", "#7b7243",
+    "#b2b47e", "#edc8c4", "#cf8acb", "#5f556a"
+]
+
+
+
 
 
 
@@ -184,8 +205,19 @@ redoBtn.addEventListener("click", () => {
     redoState();
 })
 
+colorBtn.addEventListener("click", () => {
+    currentColor = getRandomColor();
+    tintBrushCanvas(currentColor);
+})
 
+blackBtn.addEventListener("click", () => {
+    currentColor = "#000000";
+    tintBrushCanvas(currentColor);
+})
 
+exportPngBtn.addEventListener("click", () => {
+    exportPNG();
+})
 
 
 //procedure: mousedown - default brush drawing - new canvas created - drawImage()
@@ -560,7 +592,7 @@ function setBrushFromImage(brushDataURL){
     }
 
     img.src = brushDataURL;
-    brushMode = "custom";
+    // brushMode = "custom";
 }
 
 // load the localStorage to avoid brushes disappearing after refresh the page.
@@ -745,13 +777,63 @@ opacitySlider.addEventListener("input", function(){
      }
 
 
+        // color palette functions
+
+function getRandomColor() {
+    const index = Math.floor(Math.random() * colorPalette.length);
+    return colorPalette[index];
+}
+
+// preload the default brush to color the brush
+
+defaultBrushImage.onload = function () {
+    brushContext.clearRect(0, 0, brushCanvas.width, brushCanvas.height);
+
+    brushContext.drawImage(
+        defaultBrushImage,
+        0, 0,
+        brushCanvas.width,
+        brushCanvas.height
+    );
+
+    currentBrushSource = brushCanvas;
+
+    updateBrushPreview(currentBrushSource);
+};
 
 
 
+        // tint brush (using "source-in" to only tint the stroke)
+function tintBrushCanvas(color){
+    brushContext.globalCompositeOperation = "source-in";
+    brushContext.fillStyle = color;
+    brushContext.fillRect(0, 0, brushCanvas.width, brushCanvas.height);
+
+//     go back to source-over mode
+brushContext.globalCompositeOperation = "source-over";
+
+currentBrushSource = brushCanvas;
+
+updateBrushPreview(currentBrushSource);
 
 
+}
 
+// export function
 
+function exportPNG() {
+    const imageDataURL = canvas.toDataURL("image/png");
+
+    const downloadLink = document.createElement("a");
+    downloadLink.href = imageDataURL;
+
+    downloadLink.download = "brush.png";
+
+    downloadLink.click();
+
+    downloadLink.remove();
+
+}
 
 
 
