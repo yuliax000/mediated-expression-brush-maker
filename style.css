@@ -58,7 +58,7 @@ button {
 button:hover {
   /*color: var(--col02);*/
   /*background-color: var(--col01);*/
-  /*background-color: var(--col03);*/
+  background-color: var(--col07);
 }
 
 button:active {
