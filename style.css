@@ -1,13 +1,14 @@
 :root{
   --col01: black;
   --col02: white;
-  --col03: #46425e;
+  --col03:
+          #e5ceb4;
   --col04: #15788c;
   --col05: #00b9be;
-  --col06: #ffeecc;
-  --col07: #ffb0a3;
+  --col06:  #b8b5b9 ;
+  --col07:#f2f0e5;
   --col08: #ff6973;
-  --border: solid 0.1rem var(--col03)
+  --border: solid 0.2rem var(--col06)
 }
 
 @media (prefers-color-scheme: dark){
@@ -25,6 +26,7 @@ main {
   flex-direction: column;
   height: 100vh;
   background-color: var(--col02);
+
 }
 
 .stageContainer {
@@ -35,7 +37,10 @@ main {
   cursor:crosshair;
   justify-content: space-around;
   border-radius: 3rem;
-
+  border: solid 0.4rem var(--col06);
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 button {
@@ -46,6 +51,9 @@ button {
   font-size: 0.8rem;
   padding:0.3rem;
   border-radius: 3rem;
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 button:hover {
@@ -68,7 +76,9 @@ button:active {
   gap: 1rem;
   background-color: var(--col06);
   border-radius: 5%;
-
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 
 }
 
@@ -81,7 +91,9 @@ button:active {
   padding: 1rem;
   background-color: var(--col06);
   border-radius: 3rem;
-
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 .previewContainer {
@@ -91,6 +103,9 @@ button:active {
   padding:1rem;
   background-color: var(--col07);
   border-radius: 3rem;
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 .previewCanvas {
@@ -103,6 +118,9 @@ button:active {
   flex-direction: column;
   background-color: var(--col07);
   border-radius: 3rem;
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 .canvas {
@@ -151,17 +169,17 @@ dialog[open]{
   cursor: pointer;
 }
 
-.guide{
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.6rem 1rem;
-  border: solid 0.1rem var(--col03);
-  border-radius: 3rem;
-  background: var(--col06);
-  color: var(--col03);
-  cursor: pointer;
-}
+/*.guide{*/
+/*  position: absolute;*/
+/*  top: 1rem;*/
+/*  left: 1rem;*/
+/*  padding: 0.6rem 1rem;*/
+/*  border: solid 0.1rem var(--col03);*/
+/*  border-radius: 3rem;*/
+/*  background: var(--col06);*/
+/*  color: var(--col03);*/
+/*  cursor: pointer;*/
+/*}*/
 .guideDialog{
   position: absolute;
   top: 4rem;
@@ -206,7 +224,9 @@ justify-content: start;
   overflow-y:auto;
   overflow-x:hidden;
   border-radius: 1rem;
-
+  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 .brushItem {
