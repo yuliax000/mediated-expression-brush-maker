@@ -35,7 +35,7 @@ main {
   cursor:crosshair;
   justify-content: space-around;
   border-radius: 3rem;
-
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 button {
@@ -46,6 +46,7 @@ button {
   font-size: 0.8rem;
   padding:0.3rem;
   border-radius: 3rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 button:hover {
@@ -68,7 +69,7 @@ button:active {
   gap: 1rem;
   background-color: var(--col06);
   border-radius: 5%;
-
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 
 }
 
@@ -81,7 +82,7 @@ button:active {
   padding: 1rem;
   background-color: var(--col06);
   border-radius: 3rem;
-
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 .previewContainer {
@@ -91,6 +92,7 @@ button:active {
   padding:1rem;
   background-color: var(--col07);
   border-radius: 3rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
 .previewCanvas {
@@ -103,6 +105,8 @@ button:active {
   flex-direction: column;
   background-color: var(--col07);
   border-radius: 3rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+
 }
 
 .canvas {
@@ -121,7 +125,7 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  /*box-shadow: 0 12px 30px rgba(0,0,0,0.18)*/
 }
 
 .modeContainer {
@@ -206,6 +210,7 @@ justify-content: start;
   overflow-y:auto;
   overflow-x:hidden;
   border-radius: 1rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 
 }
 
