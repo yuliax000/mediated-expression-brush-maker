@@ -26,7 +26,8 @@ main {
   flex-direction: column;
   height: 100vh;
   background-color: var(--col02);
-
+  background-image:  url("assets/paperTexture.png");
+  background-size: 100%
 }
 
 .stageContainer {
@@ -38,8 +39,8 @@ main {
   justify-content: space-around;
   border-radius: 3rem;
   border: solid 0.4rem var(--col06);
-  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
-  background-size: 12px 12px;
+  background-image:  url("assets/paperTexture.png");
+  background-size: 100%;
   box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
@@ -76,9 +77,10 @@ button:active {
   gap: 1rem;
   background-color: var(--col06);
   border-radius: 5%;
-  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
-  background-size: 12px 12px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  background-image:  url("assets/paperTexture.png");
+  background-size: 100%
 
 }
 
@@ -91,9 +93,10 @@ button:active {
   padding: 1rem;
   background-color: var(--col06);
   border-radius: 3rem;
-  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
-  background-size: 12px 12px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  background-image:  url("assets/paperTexture.png");
+  background-size: 400%;
 }
 
 .previewContainer {
@@ -103,8 +106,8 @@ button:active {
   padding:1rem;
   background-color: var(--col07);
   border-radius: 3rem;
-  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
-  background-size: 12px 12px;
+  background-image:  url("assets/paperTexture.png");
+  background-size: 100%;
   box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
@@ -118,9 +121,10 @@ button:active {
   flex-direction: column;
   background-color: var(--col07);
   border-radius: 3rem;
-  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
-  background-size: 12px 12px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  background-image:  url("assets/paperTexture.png");
+  background-size: 100%
 }
 
 .canvas {
@@ -224,8 +228,8 @@ justify-content: start;
   overflow-y:auto;
   overflow-x:hidden;
   border-radius: 1rem;
-  background-image:   radial-gradient(rgba(70, 66, 94, 0.08) 1px, transparent 1px);
-  background-size: 12px 12px;
+  background-image:  url("assets/paperTexture.png");
+  background-size: 100%
   box-shadow: 0 12px 30px rgba(0,0,0,0.18)
 }
 
