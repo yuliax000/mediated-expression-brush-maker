@@ -53,14 +53,14 @@ const exportPngBtn = document.getElementById("export");
 
 
 // define canvas size
-const width = 580;
-const height = 580;
+const baseWidth = 580;
+const baseHeight = 580;
 
 // adding stage and layer
 const stage = new Konva.Stage({
     container: "canvas",
-    width: width,
-    height: height,
+    width: baseWidth,
+    height: baseHeight,
 })
 
 const layer = new Konva.Layer();
@@ -228,7 +228,7 @@ image.on("mousedown touchstart", function(){
    updateCurrentBrushSource();
 
     isPaint = true;
-    lastPointerPosition = stage.getPointerPosition();
+    lastPointerPosition = getScalePointer();
     if (!lastPointerPosition) return;
 
     if(drawMode === "brush") {
@@ -281,7 +281,7 @@ stage.on("mousemove touchmove", function(){
     if(!isPaint){
         return;
     }
-  const pos = stage.getPointerPosition()
+  const pos = getScalePointer()
 
     if (drawMode === "brush") {
         // 1.original manually drawing method
@@ -291,19 +291,21 @@ stage.on("mousemove touchmove", function(){
         // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
         stampBrush(lastPointerPosition, pos, currentBrushSource, brushSize, "draw");
 
+        lastPointerPosition = pos;
 
     }
     if (drawMode === "eraser") {
         stampBrush(lastPointerPosition, pos, currentBrushSource, eraserSize, "erase");
         // 1. original eraser
         // context.globalCompositeOperation = "destination-out";
-
+       lastPointerPosition = pos;
     }
 
     if (drawMode === "spray") {
         sprayLine(lastPointerPosition, pos, currentBrushSource,
             brushSize, 100, Math.max(2, brushSize * 0.2),"draw"
         )
+        lastPointerPosition = pos;
     }
 
     // 1. original manually drawing method
@@ -835,9 +837,36 @@ function exportPNG() {
 
 }
 
+//responsive canvas: https://konvajs.org/docs/sandbox/Responsive_Canvas.html
+function resizeStage(){
+    const container = stage.container();
+    const containerWidth = container.offsetWidth;
+
+    const scale = containerWidth / baseWidth;
+
+    stage.width(baseWidth * scale);
+    stage.height(baseHeight * scale);
+    stage.scale({x:scale, y:scale});
+
+    
+}
+
+window.addEventListener("resize", resizeStage);
+resizeStage();
 
 
 
+        // to calculate the proportional pointer coordinates
+
+function getScalePointer(){
+    const pointer = stage.getPointerPosition();
+    const scale = stage.scaleX();
+
+    return {
+        x: pointer.x / scale,
+        y: pointer.y / scale
+    };
+}
 
 
 

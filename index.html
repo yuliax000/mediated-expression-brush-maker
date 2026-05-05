@@ -37,14 +37,24 @@
 
     <div class="functionContainer" id="functionContainer">
         <div class="previewContainer" id="previewContainer">
-            <p>brush preview</p>
+            <div class="previewTitle" id="previewTitle">
+                <img src="assets/preview.png" alt="previewPNG">
+                <p>brush preview</p>
+            </div>
+
             <div class="brushPreviewWindow" id="brushPreviewWindow">
                 <canvas  class="previewCanvas" id="previewCanvas" width="120" height="120"></canvas>
             </div>
-            <button class="saveToBrush" id="saveToBrush">save to brush</button>
+            <button class="saveToBrush" id="saveToBrush">
+                <img src="assets/saveBrush.png" alt="saveBrushPNG">
+            </button>
         </div>
         <div class="libraryContainer" id="libraryContainer">
-            <p>Brush Library</p>
+            <div class="libraryTitle" id="libraryTitle">
+                <img src="assets/library.png" alt="libraryPNG">
+                <p>Brush Library</p>
+            </div>
+
             <div class="brushLibrary" id="brushLibrary">
 
             </div>
@@ -54,9 +64,16 @@
 
 <div class="mainContainer" id="mainContainer">
     <div class="modeContainer" id="modeContainer">
-        <button id="guide" class="guide">Guide</button>
-        <button id="defaultModeBtn">Default Mode</button>
-        <button id="generativeModeBtn">Generative Mode</button>
+        <button id="guide" class="guide">
+            <img src="assets/guide.png" alt="guidePNG">
+
+        </button>
+        <button id="defaultModeBtn" class="defaultModeBtn">
+            <img src="assets/normal.png" alt="defaultModePNG">
+        </button>
+        <button class="generativeModeBtn" id="generativeModeBtn">
+            <img src="assets/evolve.png" alt="generativePNG" >
+        </button>
 
     </div>
     <div class="canvasContainer" id="canvasContainer">
@@ -65,46 +82,63 @@
             <div class="tools" id="tools">
                 <button id="brushBtn">
                     <img src="assets/pencil.png" alt="brushPNG">
+<!--                    I add small tips, while hover it will appear to guide users-->
+                    <span class="tooltips">Brush</span>
                 </button>
                 <button id="eraserBtn">
                     <img src="assets/eraser.png" alt="eraserPNG">
+                    <span class="tooltips">Eraser</span>
                 </button>
                 <button id="sprayBtn">
                     <img src="assets/spray.png" alt="sprayPNG">
+                    <span class="tooltips">Spray tool</span>
                 </button>
+
 
 
 
                 <button id="blackBtn">
                     <img src="assets/black.png" alt="blackPNG">
+                    <span class="tooltips">Black</span>
                 </button>
 
                 <button id="colorBtn">
                     <img src="assets/color.png" alt="colorPNG">
+                    <span class="tooltips">Change a color?</span>
 
                 </button>
 
                 <button id="undoBtn">
                     <img src="assets/undo.png" alt="undoPNG">
+                    <span class="tooltips">Undo</span>
                 </button>
                 <button id="redoBtn">
                     <img src="assets/redo.png" alt="redoPNG">
+                    <span class="tooltips">Redo</span>
                 </button>
                 <button id="clearBtn">
                     <img src="assets/clean.png" alt="cleanPNG">
+                    <span class="tooltips">Clean</span>
                 </button>
 
 
                 <div class="sliderContainer">
                     <div class="sizeControl">
-                        <label id="sizeLabel">Size</label>
+                        <label id="sizeLabel" class="sizeLabel">
+                            <span>●</span>
+                            <span class="tooltips">Size</span></label>
+
                         <input type="range" id="sizeSlider" min="5" max="400" value="40">
                         <!-- I decide to add a text showing value because that allows users changing the size precisely-->
                         <span id="sizeValue">40</span>
 
                     </div>
                     <div class="opacityControl">
-                        <label id="opacityLabel">Opacity</label>
+                        <label id="opacityLabel" class="opacityLabel">
+                            <span>◐</span>
+                            <span class="tooltips">Opacity</span>
+                            </label>
+
                         <input type="range" id="opacitySlider" min="0" max="1" step="0.01" value="1">
                         <span id="opacityValue">1</span>
                     </div>
@@ -118,7 +152,9 @@
 
     </div>
     <div class="saveContainer" id="saveContainer" >
-        <button class="export" id="export">Export PNG</button>
+        <button class="export" id="export">
+            <img src="assets/export.png" alt="exportPNG">
+        </button>
     </div>
     </div>
 

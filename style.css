@@ -2,20 +2,20 @@
   --col01: black;
   --col02: white;
   --col03:#e5ceb4;
-  --col04: #15788c;
-  --col05: #00b9be;
+  --col04: #edc8c4;
+  --col05: #d3a068;
   --col06:  #b8b5b9 ;
   --col07:#f2f0e5;
-  --col08: #ff6973;
+  --col08: #b2b47e;
   --border: solid 0.2rem var(--col06)
 }
 
 @media (prefers-color-scheme: dark){
- :root {
-   --col01: white;
-   --col02: black;
+  :root {
+    --col01: white;
+    --col02: black;
 
- }
+  }
 }
 
 
@@ -23,16 +23,20 @@
 main {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100dvh;
+  height: auto;
+  width: 100%;
   background-color: var(--col02);
   background-image:  url("assets/paperTexture.png");
-  background-size: 100%
+  background-size: 400%;
+
 }
 
 .stageContainer {
   background-color: var(--col03);
   display:flex;
 
+  min-height: 100%;
   flex: 1;
   cursor:crosshair;
   justify-content: space-around;
@@ -44,6 +48,7 @@ main {
 }
 
 button {
+  position:relative;
   cursor: pointer;
   /*color:var(--col01);*/
   background-color: transparent;
@@ -80,17 +85,18 @@ button:active {
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background-image:  url("assets/paperTexture.png");
-  background-size: 100%
+  background-size: 100%;
 
 }
 
 .functionContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex: 0 0 320px;
   align-items: center;
   padding: 1rem;
+  gap: 5rem;
   background-color: var(--col06);
   border-radius: 3rem;
 
@@ -102,13 +108,15 @@ button:active {
 .previewContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.3rem;
   padding:1rem;
   background-color: var(--col07);
   border-radius: 3rem;
   background-image:  url("assets/paperTexture.png");
   background-size: 100%;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+
 }
 
 .previewCanvas {
@@ -124,25 +132,28 @@ button:active {
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background-image:  url("assets/paperTexture.png");
-  background-size: 100%
+  background-size: 100%;
+  width: 10%;
 }
 
 .canvas {
-  width: 580px;
-  height: 580px;
+  width: 100%;
+  height: 100%;
   background-color: white;
 }
 
 .mainContainer {
   display: flex;
   flex-direction: column;
-
+  position: relative;
 }
 
 .tools {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+
 
 }
 
@@ -151,11 +162,20 @@ button:active {
   flex-direction: row;
   justify-content: flex-end;
   gap:0.5rem;
+  padding: 2.5rem 2rem;
+  border-radius: 3rem;
+  position:relative;
+  z-index: 5;
+  /*margin-bottom: -2.2rem;*/
+
+
 }
 
 .saveContainer{
   display: flex;
   justify-content: flex-end;
+  position: relative;
+  margin-top: -1rem;
 }
 
 dialog[open]{
@@ -173,17 +193,14 @@ dialog[open]{
   cursor: pointer;
 }
 
-/*.guide{*/
-/*  position: absolute;*/
-/*  top: 1rem;*/
-/*  left: 1rem;*/
-/*  padding: 0.6rem 1rem;*/
-/*  border: solid 0.1rem var(--col03);*/
-/*  border-radius: 3rem;*/
-/*  background: var(--col06);*/
-/*  color: var(--col03);*/
-/*  cursor: pointer;*/
-/*}*/
+.guide{
+  position: absolute;
+  top: 20%;
+  right: 26%;
+  padding: 0.3rem 0.3rem;
+  width:7%;
+  /*cursor: pointer;*/
+}
 .guideDialog{
   position: absolute;
   top: 4rem;
@@ -216,7 +233,7 @@ dialog[open]{
   display: grid;
   grid-template-columns: repeat(6, 2rem);
   grid-auto-rows: 2rem;
-justify-content: start;
+  justify-content: start;
   gap: 0.5rem;
   padding: 0.5rem;
   width: 100%;
@@ -297,7 +314,7 @@ input[type="range"] {
 .sliderContainer {
   display: flex;
   flex-direction: row;
-  gap:2rem;
+  gap:0.3rem;
   align-items: center;
 }
 
@@ -306,6 +323,21 @@ input[type="range"] {
   flex-direction: column;
   align-items: center;
   width: 1rem;
+
+}
+
+.sizeLabel {
+  position: relative;
+}
+
+.sizeLabel:hover .tooltips{
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+
+}
+
+.opacityLabel {
+  position: relative;
 }
 
 .opacityControl {
@@ -315,7 +347,171 @@ input[type="range"] {
   width: 1rem;
 }
 
+.opacityLabel:hover .tooltips{
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
 .tools img{
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.modeContainer img{
+  width: 5rem;
+
+}
+
+.generativeModeBtn img {
+  display:block;
+  width: 100%;
+  height: auto;
+}
+
+/*I enlarge evolve button to catch users' attention.
+To feel more paper-like, I tilt them a little. */
+
+.generativeModeBtn{
+  right: 1%;
+  top: 4%;
+  position: absolute;
+  padding: 0.6rem;
+   width: 15%;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18) ;
+  border-radius: 1rem;
+  background-color: var(--col05);
+
+  transform: rotate(6deg);
+background-image:  url("assets/paperTexture.png");
+/*  I add animation to make it feel more like paper(can rotate a little when interact with it.)*/
+transition: transform 0.2s ease;
+}
+
+.generativeModeBtn:hover{
+  transform:
+  rotate(0deg)
+  scale(1.05);
+
+}
+
+
+
+.defaultModeBtn{
+  position: absolute;
+  right: 15%;
+  top: 15%;
+  padding: 0.6rem;
+  width: 10%;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18) ;
+  border-radius: 1rem;
+  background-color: var(--col04);
+  background-image: url("assets/paperTexture.png");
+
+  transform: rotate(-4deg);
+  transition: transform 0.2s ease;
+}
+
+.defaultModeBtn:hover{
+  transform:
+          rotate(0deg)
+          scale(1.05);
+}
+
+
+.export{
+  position: absolute;
+  right: 2%;
+  top: 5%;
+  padding: 0.3rem;
+  width: 10%;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18) ;
+  border-radius: 1rem;
+  transform: rotate(-2deg);
+  background-image:  url("assets/paperTexture.png");
+  background-color: var(--col07);
+  transition: transform 0.2s ease;
+}
+
+.export:hover{
+  transform:
+          rotate(0deg)
+          scale(1.05);
+}
+
+.saveToBrush {
+  border-radius: 2rem;
+  width: 6rem;
+}
+
+.libraryTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.libraryTitle img {
+  width:3rem;
+}
+
+.previewTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.previewTitle img {
+  width:2rem;
+}
+
+.tooltips{
+position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background:var(--col08);
+  color: var(--col01);
+  padding: 0.2rem 0.5rem;
+
+  font-size: 0.7rem;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.15s;
+  background-image: url("assets/paperTexture.png");
+  border-radius: 0.2rem;
+}
+
+button:hover .tooltips{
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/*Responsive layout.  */
+@media (orientation: portrait) {
+  .stageContainer{
+    flex-direction: column;
+    align-items: center;
+  }
+  .canvasContainer {
+    flex-direction: row;
+    align-items: center;
+    order:1;
+
+  }
+
+  .functionContainer {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    order: 2;
+
+
+  }
+
+  .saveContainer {
+    order: 3;
+  }
 }
