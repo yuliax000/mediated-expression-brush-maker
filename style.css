@@ -1,3 +1,18 @@
+/*I choose to use a hand-writing style font to create a playful atmosphere*/
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+
+body {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 150%;
+}
+
+
+
+
 :root{
   --col01: black;
   --col02: white;
@@ -36,15 +51,19 @@ main {
   background-color: var(--col03);
   display:flex;
 
-  min-height: 100%;
+  min-height: auto;
+  width: auto;
   flex: 1;
   cursor:crosshair;
-  justify-content: space-around;
+  align-items: flex-start;
+  justify-content: center;
   border-radius: 3rem;
   border: solid 0.4rem var(--col06);
   background-image:  url("assets/paperTexture.png");
   background-size: 100%;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  gap: clamp(0.8rem, 1.5vw, 1.5rem);
+  padding: clamp(0.8rem, 2vw, 1.5rem);
 }
 
 button {
@@ -76,8 +95,8 @@ button:active {
 .canvasContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: flex-start;
+  /*align-items: center;*/
   padding: 1rem 1rem;
   gap: 1rem;
   background-color: var(--col06);
@@ -86,6 +105,14 @@ button:active {
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background-image:  url("assets/paperTexture.png");
   background-size: 100%;
+  /*I decide to decrease the size of canvas to keep the layout clean and tidy*/
+  /*width: min(90vw, 700px);*/
+  width: min(85vw, 650px);
+
+
+  align-self: center;
+
+
 
 }
 
@@ -93,12 +120,15 @@ button:active {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  flex: 0 0 320px;
+  /*flex: 0 1 10%;*/
   align-items: center;
   padding: 1rem;
-  gap: 5rem;
+  gap: clamp(1rem, 4vh, 3rem);
   background-color: var(--col06);
   border-radius: 3rem;
+  height: auto;
+  /*align-self: center;*/
+  margin: 4% 1%;
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background-image:  url("assets/paperTexture.png");
@@ -122,10 +152,13 @@ button:active {
 .previewCanvas {
   display:flex;
   background-color: white;
+  width: 120px;
+  height: 120px;
 }
 
 .toolbarContainer{
   display: flex;
+  flex: 0 0 3rem;
   flex-direction: column;
   background-color: var(--col07);
   border-radius: 1rem;
@@ -137,8 +170,11 @@ button:active {
 }
 
 .canvas {
-  width: 100%;
-  height: 100%;
+  /*width: 100%;*/
+  /*height: 100%;*/
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 1/1;
   background-color: white;
 }
 
@@ -146,6 +182,10 @@ button:active {
   display: flex;
   flex-direction: column;
   position: relative;
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  /*align-items: center;*/
 }
 
 .tools {
@@ -166,16 +206,26 @@ button:active {
   border-radius: 3rem;
   position:relative;
   z-index: 5;
-  /*margin-bottom: -2.2rem;*/
+  margin-bottom: -2.5rem;
+  pointer-events: none;
+
+}
 
 
+.modeContainer button{
+  pointer-events: auto;
 }
 
 .saveContainer{
   display: flex;
   justify-content: flex-end;
   position: relative;
-  margin-top: -1rem;
+  margin-top: -5rem;
+  pointer-events: none;
+}
+
+.saveContainer button {
+  pointer-events: auto;
 }
 
 dialog[open]{
@@ -185,34 +235,68 @@ dialog[open]{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: none;
+  border-radius: 2rem;
   gap: 1rem;
   z-index: 99;
+  background-image:  url("assets/paperTexture.png");
+  background-color: var(--col06);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
 }
 
 .closeDialog{
   cursor: pointer;
 }
 
+dialog button {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: "Caveat", cursive;
+  font-size: 2rem;
+  font-weight: 700;
+
+  background-color: transparent;
+  color: var(--col01);
+  border: none;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+
+  /*border: 0.15rem solid var(--col01);*/
+  /*border-radius: 1rem;*/
+
+  padding: 0.4rem 1rem;
+  /*box-shadow: 0 6px 12px rgba(0,0,0,0.15);*/
+}
+
+dialog button:hover {
+  background-color: transparent;
+}
+
+
+
 .guide{
   position: absolute;
-  top: 20%;
-  right: 26%;
+  top: 3%;
+  right: 22%;
   padding: 0.3rem 0.3rem;
-  width:7%;
+  width:5%;
   /*cursor: pointer;*/
 }
 .guideDialog{
   position: absolute;
   top: 4rem;
   left: 1rem;
-  width: 20rem;
-  max-width: 90vw;
+  width: 30rem;
+  max-width: 100vw;
+  height: auto;
   padding: 1.2rem;
-  border: solid 0.1rem var(--col03);
+  border: solid 0.1rem var(--col05);
   border-radius: 1rem;
-  background: var(--col06);
-  color: var(--col03);
+  background: var(--col08);
+  color: var(--col01);
   box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+  background-image:  url("assets/paperTexture.png");
 }
 
 .guideDialog::backdrop{
@@ -247,7 +331,9 @@ dialog[open]{
   border-radius: 1rem;
   background-image:  url("assets/paperTexture.png");
   background-size: 100%;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18)
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  width: auto;
+  height: auto;
 }
 
 .brushItem {
@@ -299,9 +385,15 @@ dialog[open]{
   z-index: 2;
 }
 
+.deleteBrushBtn:hover {
+  background-color: var(--col03);
+  color: var(--col01);
+}
+
 .brushBox:hover  .deleteBrushBtn {
   opacity: 1;
   pointer-events: auto;
+
 }
 
 input[type="range"] {
@@ -352,6 +444,15 @@ input[type="range"] {
   transform: translateX(-50%) translateY(-2px);
 }
 
+.sizeControl{
+  font-size: 80%;
+}
+
+
+.opacityControl{
+  font-size: 80%;
+}
+
 .tools img{
   width: 100%;
   height: 100%;
@@ -372,11 +473,11 @@ input[type="range"] {
 To feel more paper-like, I tilt them a little. */
 
 .generativeModeBtn{
-  right: 1%;
+  right: 0.3%;
   top: 4%;
   position: absolute;
   padding: 0.6rem;
-   width: 15%;
+   width: 12%;
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.18) ;
   border-radius: 1rem;
@@ -399,10 +500,10 @@ transition: transform 0.2s ease;
 
 .defaultModeBtn{
   position: absolute;
-  right: 15%;
-  top: 15%;
+  right: 11%;
+  top: 4%;
   padding: 0.6rem;
-  width: 10%;
+  width: 7%;
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.18) ;
   border-radius: 1rem;
@@ -432,6 +533,7 @@ transition: transform 0.2s ease;
   background-image:  url("assets/paperTexture.png");
   background-color: var(--col07);
   transition: transform 0.2s ease;
+
 }
 
 .export:hover{
@@ -490,10 +592,182 @@ button:hover .tooltips{
 }
 
 /*Responsive layout.  */
-@media (orientation: portrait) {
+/*I divide the size into many parts because I don't want the export cover the canvas
+which will affect users' experience*/
+@media(min-width: 2561px ) and (min-height: 900px){
+  .modeContainer {
+    margin-bottom: 0rem;
+  }
+
+  .canvasContainer {
+    width: min(95vw, 1250px);
+
+
+  }
+}
+
+
+
+
+
+
+@media(min-width: 1801px) and (max-width: 2560px) and (min-height: 900px){
+  .modeContainer {
+    margin-bottom: 0rem;
+  }
+
+  .canvasContainer {
+    width: min(90vw, 1050px);
+
+  }
+}
+
+
+
+@media (max-width : 1800px) and (max-height: 960px){
+  .modeContainer {
+    margin-bottom: -0.5rem;
+  }
+  .generativeModeBtn {
+    right: 3%;
+    top: 3%;
+    position: absolute;
+    padding: 0.6rem;
+    width: 15%;
+  }
+
+
+  .defaultModeBtn{
+    position: absolute;
+    right: 15%;
+    top: 5%;
+    padding: 0.6rem;
+    width: 10%;
+  }
+
+  .guide{
+    position: absolute;
+    top:0.5%;
+    right: 40%;
+    padding: 0.3rem 0.3rem;
+    width:7%;
+    /*cursor: pointer;*/
+  }
+
+  .canvasContainer{
+    width: min(85vw, 650px);
+  }
+
+}
+
+
+
+
+
+
+@media (max-width: 1280px) {
+  .export {
+    position: absolute;
+    right: 0.5%;
+    top:10%;
+  }
+
+
+  .saveContainer {
+    margin-top: 0rem;
+  }
+  .guide{
+    position: absolute;
+    top:0.5%;
+    right: 35%;
+    padding: 0.3rem 0.3rem;
+    width:8%;
+    /*cursor: pointer;*/
+  }
+  .generativeModeBtn {
+    right: 3%;
+    top: 3%;
+    position: absolute;
+    padding: 0.6rem;
+    width: 15%;
+  }
+
+
+  .defaultModeBtn{
+    position: absolute;
+    right: 16%;
+    top: 5%;
+    padding: 0.6rem;
+    width: 10%;
+  }
+
+
+
+
+
+}
+
+
+
+@media (max-height: 720px) {
+  .functionContainer {
+    gap: 0.6rem;
+    padding: 0.6rem;
+  }
+
+  .modeContainer {
+    margin-bottom: -1rem;
+    padding: 1rem 1rem;
+  }
+
+  .generativeModeBtn {
+    right: 5%;
+    top: 3%;
+    position: absolute;
+    padding: 0.6rem;
+    width: 12%;
+  }
+
+
+  .defaultModeBtn{
+    position: absolute;
+    right: 16%;
+    top: 5%;
+    padding: 0.6rem;
+    width: 7%;
+  }
+
+  .guide{
+    position: absolute;
+    top:0.5%;
+    right: 90%;
+    padding: 0.3rem 0.3rem;
+    width:5%;
+    /*cursor: pointer;*/
+  }
+
+
+  .saveContainer {
+    margin-top: -4rem;
+
+  }
+
+  .toolbarContainer {
+    flex: 0 0 2rem;
+
+  }
+
+}
+
+
+
+
+
+@media (max-width: 1000px) {
   .stageContainer{
     flex-direction: column;
     align-items: center;
+
   }
   .canvasContainer {
     flex-direction: row;
@@ -502,16 +776,158 @@ button:hover .tooltips{
 
   }
 
+  .saveContainer {
+    margin-top: -1rem;
+
+  }
+
   .functionContainer {
-    width: 100%;
+    width: 97%;
     flex-direction: row;
     align-items: center;
     order: 2;
-
+    gap: 15%;
 
   }
+
 
   .saveContainer {
     order: 3;
+    /*display: none;*/
+  }
+  .modeContainer {
+    margin-bottom: -1rem;
+  }
+
+
+}
+
+@media (max-width: 700px) {
+  .generativeModeBtn {
+    right: 1%;
+    top: 4%;
+    position: absolute;
+    padding: 0.6rem;
+    width: 18%;
+  }
+
+
+  .defaultModeBtn{
+    position: absolute;
+    right: 20%;
+    top: 6%;
+    padding: 0.6rem;
+    width: 13%;
+  }
+
+  .stageContainer{
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(0.8rem, 2vw, 1.5rem);
+    padding: 1rem;
+
+
+  }
+
+
+  .saveContainer {
+    margin-top: -2rem;
+
+  }
+  .guide{
+    position: absolute;
+    top:0.5%;
+    right: 35%;
+    padding: 0.3rem 0.3rem;
+    width:10%;
+    /*cursor: pointer;*/
   }
 }
+
+@media (max-width: 560px) {
+  .saveContainer{
+    margin-top: -2rem;
+  }
+  .functionContainer {
+    flex-direction: column;
+  }
+}
+
+
+@media (max-width: 425px) {
+
+  .saveContainer {
+    margin-top: -2rem;
+
+  }
+
+  .guide{
+    position: absolute;
+    top: 10%;
+    right: 35%;
+    padding: 0.3rem 0.3rem;
+    width:10%;
+    /*cursor: pointer;*/
+  }
+}
+
+/*to change the layout when it's landscape
+It doesn't feel good, the layout will be messy and the canvas will be too small*/
+/*I choose to let mobile phone users use portrait layout only*/
+
+/*I spend a lot of time on responsive to make sure it can suit different size*/
+
+@media (max-width: 1280px) and (max-height: 720px) {
+  .modeContainer {
+    margin-bottom: 0;
+
+  }
+
+  .generativeModeBtn {
+    right: 3%;
+    top: 3%;
+    width: 12%;
+  }
+
+  .defaultModeBtn {
+
+    right: 14%;
+    top: 5%;
+
+    width: 7%;
+  }
+
+  .canvasContainer {
+    margin-top: 0.5rem;
+  }
+
+
+  .guide {
+    position: absolute;
+    top: 0.5%;
+    right: 25%;
+    padding: 0.3rem 0.3rem;
+    width: 5%;
+  }
+
+  .canvasContainer {
+    width: min(75vw, 600px);
+
+
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+

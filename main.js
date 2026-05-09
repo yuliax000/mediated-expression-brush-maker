@@ -74,6 +74,8 @@ const image = new Konva.Image({
     image:canvas,
     x:0,
     y:0,
+    width:baseWidth,
+    height: baseHeight
 })
 layer.add(image);
 
@@ -208,11 +210,15 @@ redoBtn.addEventListener("click", () => {
 colorBtn.addEventListener("click", () => {
     currentColor = getRandomColor();
     tintBrushCanvas(currentColor);
+    currentBrushSource = brushCanvas;
+    updateBrushPreview(currentBrushSource);
 })
 
 blackBtn.addEventListener("click", () => {
     currentColor = "#000000";
     tintBrushCanvas(currentColor);
+    currentBrushSource = brushCanvas;
+    updateBrushPreview(currentBrushSource);
 })
 
 exportPngBtn.addEventListener("click", () => {
@@ -220,7 +226,80 @@ exportPngBtn.addEventListener("click", () => {
 })
 
 
+// I add some key binding for users who had drawing tool experience.
+// (when I test the tools I had the habit to use shortcuts to undo/Redo, but it didn't work at that time )
+// (so I decide to add key control to my tool)
+
+window.addEventListener("keydown", function (event) {
+
+    // brush
+    if (event.key === "b") {
+        drawMode = "brush";
+        syncToolSliders();
+    }
+
+    // eraser
+    if (event.key === "e") {
+        drawMode = "eraser";
+        syncToolSliders();
+    }
+
+    // spray
+    if (event.key === "s") {
+        drawMode = "spray";
+        syncToolSliders();
+    }
+
+    // generative mode
+    if (event.key === "g") {
+        brushMode = "generative";
+        syncBrushPreview();
+    }
+
+    // default mode
+    if (event.key === "n") {
+        brushMode = "default";
+        syncBrushPreview();
+    }
+
+    if (event.ctrlKey && event.key === "z"){
+        // prevent browser's default shortcuts
+        event. preventDefault();
+
+        undoState();
+    }
+
+    if (event.ctrlKey && event.key === "y"){
+        // prevent browser's default shortcuts
+        event. preventDefault();
+
+        redoState();
+    }
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //procedure: mousedown - default brush drawing - new canvas created - drawImage()
+
+
 
 
 image.on("mousedown touchstart", function(){
@@ -262,14 +341,11 @@ image.on("mousedown touchstart", function(){
 stage.on("mouseup touchend", function(){
 
 
-    if (isPaint && drawMode === "brush") {
+    if (isPaint && (drawMode === "brush" || drawMode === "eraser" || drawMode === "spray")) {
         hasCanvasContent = true;
-        if(brushMode === "generative") {
-            updateBrushFromCurrentCanvas();
-            currentBrushSource = brushCanvas;
-            // stop drawing then update the preview canvas, so that users can view current brush before their next draw
-            updateBrushPreview(currentBrushSource);
-        }
+
+        // for easier management, I write a new function to update brush and preview
+        evolveBrushIfNeeded();
 
     }
     saveCanvasState();
@@ -277,61 +353,90 @@ stage.on("mouseup touchend", function(){
     isPaint = false;
 });
 
+
+// adding throttle to mousemove, for better controlling the spacing between each point and reducing computational power consumption
+//  requestAnimationFrame: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
+// https://web.dev/articles/canvas-performance
+// https://www.debugbear.com/blog/requestanimationframe
+// seems requestAnimationFrame is better for visual performance. I choose to use this method
+let rafId;
+let latestPos;
+
 stage.on("mousemove touchmove", function(){
     if(!isPaint){
         return;
     }
-  const pos = getScalePointer()
 
-    if (drawMode === "brush") {
-        // 1.original manually drawing method
-        // context.globalCompositeOperation = "source-over";
+    latestPos = getScalePointer();
 
-        // 2. using brushImage as stamp to draw
-        // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
-        stampBrush(lastPointerPosition, pos, currentBrushSource, brushSize, "draw");
+    if (rafId) return;
 
-        lastPointerPosition = pos;
+  rafId = requestAnimationFrame(function(){
 
-    }
-    if (drawMode === "eraser") {
-        stampBrush(lastPointerPosition, pos, currentBrushSource, eraserSize, "erase");
-        // 1. original eraser
-        // context.globalCompositeOperation = "destination-out";
-       lastPointerPosition = pos;
-    }
+      const pos = latestPos;
 
-    if (drawMode === "spray") {
-        sprayLine(lastPointerPosition, pos, currentBrushSource,
-            brushSize, 100, Math.max(2, brushSize * 0.2),"draw"
-        )
-        lastPointerPosition = pos;
-    }
+      if (!pos || ! lastPointerPosition) {
+          rafId = null;
+          return;
+      }
 
-    // 1. original manually drawing method
-    // context.beginPath();
-    //
-    // const localPos = {
-    //     x: lastPointerPosition.x - image.x(),
-    //     y: lastPointerPosition.y - image.y(),
-    // }
-    // context.moveTo(localPos.x, localPos.y);
-    // const pos = stage.getPointerPosition();
-    // const newLocalPos = {
-    //     x: pos.x - image.x(),
-    //     y: pos.y - image.y(),
-    // }
-    // context.lineTo(newLocalPos.x, newLocalPos.y);
-    // context.closePath();
-    // context.stroke();
-    //
-    lastPointerPosition = pos;
 
-    layer.batchDraw();
+      if (drawMode === "brush") {
+          // 1.original manually drawing method
+          // context.globalCompositeOperation = "source-over";
 
-    if (brushMode === "generative") {
-        updateBrushPreview(currentBrushSource);
-    }
+          // 2. using brushImage as stamp to draw
+          // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
+          stampBrush(lastPointerPosition, pos, currentBrushSource, brushSize, "draw");
+
+          lastPointerPosition = pos;
+
+      }
+      if (drawMode === "eraser") {
+          stampBrush(lastPointerPosition, pos, currentBrushSource, eraserSize, "erase");
+          // 1. original eraser
+          // context.globalCompositeOperation = "destination-out";
+          lastPointerPosition = pos;
+      }
+
+      if (drawMode === "spray") {
+          sprayLine(lastPointerPosition, pos, currentBrushSource,
+              brushSize, 100, Math.max(2, brushSize * 0.2),"draw"
+          )
+          lastPointerPosition = pos;
+      }
+
+      // 1. original manually drawing method
+      // context.beginPath();
+      //
+      // const localPos = {
+      //     x: lastPointerPosition.x - image.x(),
+      //     y: lastPointerPosition.y - image.y(),
+      // }
+      // context.moveTo(localPos.x, localPos.y);
+      // const pos = stage.getPointerPosition();
+      // const newLocalPos = {
+      //     x: pos.x - image.x(),
+      //     y: pos.y - image.y(),
+      // }
+      // context.lineTo(newLocalPos.x, newLocalPos.y);
+      // context.closePath();
+      // context.stroke();
+      //
+      lastPointerPosition = pos;
+
+      layer.batchDraw();
+
+      if (brushMode === "generative") {
+          updateBrushPreview(currentBrushSource);
+      }
+
+      rafId = null;
+
+
+  })
+
+
 
 })
 
@@ -377,7 +482,9 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
         context.globalAlpha = brushOpacity;
     }
 
-    // Original version of generative brush.
+
+    // I feel 1.5 is quite a good step that the brush has some spacing but not uncontinuous.
+    // I tried different steps but it doesn't work as I thought, so I keep the step as 1.5.
     for (let z = 0; z < distance; z += 1.5){
         const x = start.x + Math.cos(angle) * z - size / 2;
         const y = start.y + Math.sin(angle) * z - size / 2;
@@ -451,14 +558,14 @@ function stampSingle(point, brushSource, size, mode = "draw"){
 // This function could be a clue of finding out the logic of this tool (maybe, need to test)
 function updateBrushPreview(source = currentBrushSource) {
     previewContext.clearRect(0,0,previewCanvas.width, previewCanvas.height);
-    const previewSize= 80;
-    const x = (previewCanvas.width - previewSize) / 2;
-    const y = (previewCanvas.height - previewSize) / 2;
+    // const previewSize= 80;
+    // const x = (previewCanvas.width - previewSize) / 2;
+    // const y = (previewCanvas.height - previewSize) / 2;
 
     previewContext.drawImage(source,
-        // 0,0, canvas.width, canvas.height,
-        // 0,0, previewCanvas.width, previewCanvas.height
-        x, y, previewSize, previewSize
+        0,0, source.width, source.height,
+        0,0, previewCanvas.width, previewCanvas.height
+        // x, y, previewSize, previewSize
     );
 }
 
@@ -470,15 +577,16 @@ function updateCurrentBrushSource(){
     //The previous one is drawing through a default circle
     // Now default mode means stop evolving the brush.(todo:change the button name after)
     if (brushMode === "default"){
-        currentBrushSource = currentBrushSource;
+        currentBrushSource = brushCanvas;
     }
     if (brushMode === "generative"){
         if (hasCanvasContent) {
-            // updateBrushFromCurrentCanvas()
+            // updateBrushFromCurrentCanvas();
             currentBrushSource = brushCanvas;
+            updateBrushPreview(currentBrushSource);
 
         } else{
-            currentBrushSource = defaultBrushImage;
+            currentBrushSource = brushCanvas;
         }
     }
     else if (brushMode === "custom"){}
@@ -511,6 +619,7 @@ const defaultBrushURL = "assets/defaultBrushSmall.png";
 
 saveToBrushBtn.addEventListener("click", function(){
     saveBrushToLibrary();
+    syncBrushPreview()
 })
 loadBrushLibrary();
 
@@ -518,6 +627,7 @@ setBrushFromImage(defaultBrushURL);
 
 
 function saveBrushToLibrary(){
+    updateBrushFromCurrentCanvas();
     const brushDataURL = brushCanvas.toDataURL();
 //     push saved brushes into array
     savedBrushes.push(brushDataURL);
@@ -848,7 +958,7 @@ function resizeStage(){
     stage.height(baseHeight * scale);
     stage.scale({x:scale, y:scale});
 
-    
+
 }
 
 window.addEventListener("resize", resizeStage);
@@ -867,6 +977,22 @@ function getScalePointer(){
         y: pointer.y / scale
     };
 }
+
+        // evolving logic function
+function evolveBrushIfNeeded(){
+    if (brushMode !== "generative") return;
+    if (!hasCanvasContent) return;
+        updateBrushFromCurrentCanvas();
+
+        // I choose to let the color evolve with brush.
+        // so click the color change button will change the color temporarily, then color evolves with canvas
+        // tintBrushCanvas(currentColor);
+        currentBrushSource = brushCanvas;
+        // stop drawing then update the preview canvas, so that users can view current brush before their next draw
+      updateBrushPreview(currentBrushSource);
+
+}
+
 
 
 

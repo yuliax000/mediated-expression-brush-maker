@@ -13,21 +13,36 @@
 <main>
 
 <dialog class="startGuide" id="startGuide">
-    <p>Hello! This is a brush-making website.</p>
-    <p>Try drawing a circle on the canvas,</p>
-    <p>then click “Generative Mode” in the top right to discover what happens! </p>
-    <p>Default Mode provides a circular brush. </p>
-    <p>Start creating your own brushes!</p>
-    <button class="closeDialog" id="closeDialog"> OK </button>
+<!--    I use question and a set of procedures to guide users explore my tool-->
+<!--    I think question may make them curious about this website-->
+    <p>How to get your brush evolve?</p>
+    <p>1. Draw a circle on the canvas</p>
+    <p>2. Click “Evolve” to discover what happens! </p>
+    <p>3. Use sliders to increase and reduce the brush size. </p>
+    <p>Start creating your own brushes and artwork!</p>
+    <button class="closeDialog" id="closeDialog">OK</button>
 </dialog>
 
+<!--    I still want to guide users to discover the generative logic.
+So I encourage them to try the evolving mode.
+I change the word "generative" to "evolve" because I feel it's more intuitive and easy to understand -->
     <dialog class="guideDialog" id="guideDialog">
         <button id="closeGuide" class="closeGuide">✖</button>
         <h3>Guide</h3>
-        <p>Click → Stamp </p>
-        <p>Drag → Draw</p>
-        <p>Default Mode → Circular brush</p>
-        <p>Generative Mode → Evolving brush</p>
+        <p>Evolve mode → G (Have a try?) </p>
+        <p>Normal mode → N (stop evolve)</p>
+        <p>Brush  →  B</p>
+        <p>Eraser  → E </p>
+        <p>Spray tool → S </p>
+        <p>Black color palette → go back to black</p>
+        <p>Color palette → get a random color</p>
+        <p>Undo → ctrl+Z</p>
+        <p>Redo → ctrl+Y</p>
+        <p>Save Brush → save your brush to library</p>
+        <p>Export → export your artwork in png format</p>
+
+
+
     </dialog>
 
 
@@ -39,7 +54,7 @@
         <div class="previewContainer" id="previewContainer">
             <div class="previewTitle" id="previewTitle">
                 <img src="assets/preview.png" alt="previewPNG">
-                <p>brush preview</p>
+                <p>Current Brush</p>
             </div>
 
             <div class="brushPreviewWindow" id="brushPreviewWindow">
@@ -149,6 +164,11 @@
 
     </div>
         <div class="canvas" id="canvas">canvas</div>
+<!--        <div class="saveContainer" id="saveContainerLandscape" >-->
+<!--            <button class="export" id="exportLandscape">-->
+<!--                <img src="assets/export.png" alt="exportPNG">-->
+<!--            </button>-->
+<!--        </div>-->
 
     </div>
     <div class="saveContainer" id="saveContainer" >
