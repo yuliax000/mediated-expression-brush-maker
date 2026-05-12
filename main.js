@@ -1,7 +1,10 @@
 
 
-//I use a modal to guide users simply when first open the page.
-// A guide box that can be opened with a single click to provide more detailed instructions.
+//I use a modal with some instruction to guide users simply when first open the page.
+
+
+
+// A guide box can be opened with a single click to provide more detailed instructions (The button is a hand-drawing question mark).
 
 // reason: 1. clear and simple
 //         2. Placed at the beginning, so it doesn’t interrupt the user experience.
@@ -226,9 +229,10 @@ exportPngBtn.addEventListener("click", () => {
 })
 
 
-// I add some key binding for users who had drawing tool experience.
+// I add some shortcuts for users who had drawing tool experience.
 // (when I test the tools I had the habit to use shortcuts to undo/Redo, but it didn't work at that time )
-// (so I decide to add key control to my tool)
+// It's more convenient for users to use a shortcut rather than click the button
+// Also this improves the consistency of drawing experience.
 
 window.addEventListener("keydown", function (event) {
 
@@ -299,7 +303,7 @@ window.addEventListener("keydown", function (event) {
 
 //procedure: mousedown - default brush drawing - new canvas created - drawImage()
 
-
+//
 
 
 image.on("mousedown touchstart", function(){
@@ -337,7 +341,7 @@ image.on("mousedown touchstart", function(){
 })
 
 
-
+// make sure the brush preview has been updated after mouseup, so that the users can see the brush change immediately.
 stage.on("mouseup touchend", function(){
 
 
@@ -358,7 +362,7 @@ stage.on("mouseup touchend", function(){
 //  requestAnimationFrame: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
 // https://web.dev/articles/canvas-performance
 // https://www.debugbear.com/blog/requestanimationframe
-// seems requestAnimationFrame is better for visual performance. I choose to use this method
+// seems requestAnimationFrame is better for visual performance.
 let rafId;
 let latestPos;
 
@@ -484,7 +488,8 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
 
 
     // I feel 1.5 is quite a good step that the brush has some spacing but not uncontinuous.
-    // I tried different steps but it doesn't work as I thought, so I keep the step as 1.5.
+    // I tried different steps, but it feels more like a set of stamps, not like a brush.
+    // I already had stamp function, so I keep the step as 1.5.
     for (let z = 0; z < distance; z += 1.5){
         const x = start.x + Math.cos(angle) * z - size / 2;
         const y = start.y + Math.sin(angle) * z - size / 2;
@@ -493,20 +498,9 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
     }
 
 
-    // I want to add some counter-intuitive mapping into the project. (is not clear)
-    // Faster drawing speed will cause denser pattern, while slower drawing speed create sparse result.
-    // I also  add some randomness to the tool.
-
-    // calculate the speed (doesn't work well, but keep it to see if I can refine it.)
-
-    // let now = performance.now();
-    // let time = Math.max(1, now - lastTime);
-    // lastTime = now;
-
-    // let speed= (distance / time) * 20;
 
 
-    // let step = Math.max(2, 12 - distance * 0.8);
+
 
     // spray tool/ not used.
     // for (let z = 0; z < distance; z += 1.5){
@@ -523,9 +517,9 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
 }
 
 
-// I found this drawImage way to update brush is more straight forward than save, then load'.
+// I found this drawImage way to update brush is more straight forward than save, then load.
 // because it doesn't have the loading process.
-// I plan to use toDataUrl while I'm building my brush library.
+
 function updateBrushFromCurrentCanvas(){
     brushContext.clearRect(0, 0, brushCanvas.width, brushCanvas.height);
     brushContext.drawImage(
@@ -555,7 +549,7 @@ function stampSingle(point, brushSource, size, mode = "draw"){
 }
 
 // preview function
-// This function could be a clue of finding out the logic of this tool (maybe, need to test)
+// This function could be a clue of finding out the logic of this tool (after test: no it couldn't).
 function updateBrushPreview(source = currentBrushSource) {
     previewContext.clearRect(0,0,previewCanvas.width, previewCanvas.height);
     // const previewSize= 80;
@@ -575,7 +569,7 @@ function updateBrushPreview(source = currentBrushSource) {
 function updateCurrentBrushSource(){
     // I made a change to default mode.
     //The previous one is drawing through a default circle
-    // Now default mode means stop evolving the brush.(todo:change the button name after)
+    // Now default mode means stop evolving the brush.
     if (brushMode === "default"){
         currentBrushSource = brushCanvas;
     }
@@ -599,11 +593,12 @@ function syncBrushPreview(){
 }
 
 
+
+
+
 // Brush Library implementation
 // create and array----save brush to DataURL --- create thumbnails through dataURL---append them into library array
 // ---- set image to brush
-
-
 
 
 //Get the elements
@@ -791,6 +786,11 @@ opacitySlider.addEventListener("input", function(){
 // calculate the points between start and end point, then draw spray brush on these point
     // I modified the stampBrush and stampSingle function to get spray tool.
     // main inspiration is from https://dilshankelsen.com/adding-spray-tool-to-html5-canvas/
+    // The spray gun tool offers users more options and a richer painting experience.
+// I use the canvas image as the pattern for the spray gun,
+// so when the user zooms in, they can clearly see a large number of brush pattern
+// it can be used to create randomly repeating patterns.
+
     function sprayLine(start, end, brushSource, radius, density, particleSize, mode = "draw") {
         const distance = getDistance(start, end);
         const angle = getAngle(start, end);
@@ -862,6 +862,8 @@ opacitySlider.addEventListener("input", function(){
 
     }
 
+     // The undo and redo functions enhance the usability of the tool.
+
      function undoState() {
     if(undoStack.length > 0){
 
@@ -889,7 +891,15 @@ opacitySlider.addEventListener("input", function(){
      }
 
 
-        // color palette functions
+        // color palette function
+// As an additional feature,
+// I want to make the color palette a "little surprise" for the website, adding some fun.
+// This little surprise needs to be uncontrollable,
+// so I decided not to allow users to freely choose the colors,
+// but to use a random color selection method to adjust the colors.
+// I chose some soft and non-striking colors,
+// hoping that users won't feel irritated or uncomfortable when using them.
+// If users want to keep the colors, they can do so by saving them as brushes.
 
 function getRandomColor() {
     const index = Math.floor(Math.random() * colorPalette.length);
@@ -932,6 +942,7 @@ updateBrushPreview(currentBrushSource);
 }
 
 // export function
+// Users can export the images for other purposes, thereby enhancing the practicality of the website.
 
 function exportPNG() {
     const imageDataURL = canvas.toDataURL("image/png");
@@ -985,7 +996,7 @@ function evolveBrushIfNeeded(){
         updateBrushFromCurrentCanvas();
 
         // I choose to let the color evolve with brush.
-        // so click the color change button will change the color temporarily, then color evolves with canvas
+        // click the color change button will change the color temporarily, then color evolves with canvas
         // tintBrushCanvas(currentColor);
         currentBrushSource = brushCanvas;
         // stop drawing then update the preview canvas, so that users can view current brush before their next draw

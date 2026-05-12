@@ -14,18 +14,29 @@
 
 <dialog class="startGuide" id="startGuide">
 <!--    I use question and a set of procedures to guide users explore my tool-->
-<!--    I think question may make them curious about this website-->
+<!--I think the question can arouse their curiosity.-->
+<!--    And these steps can guide their first step of exploration.-->
     <p>How to get your brush evolve?</p>
-    <p>1. Draw a circle on the canvas</p>
-    <p>2. Click “Evolve” to discover what happens! </p>
+
+    <p>1. Click “Evolve”</p>
+    <p>2. Draw a circle on the canvas</p>
     <p>3. Use sliders to increase and reduce the brush size. </p>
+    <p>4. Discover what happens.</p>
     <p>Start creating your own brushes and artwork!</p>
     <button class="closeDialog" id="closeDialog">OK</button>
 </dialog>
 
-<!--    I still want to guide users to discover the generative logic.
-So I encourage them to try the evolving mode.
+<!--    I still hope that users can discover the interesting aspects of the website through exploration,
+ so I didn't describe the website's logic overly clear.
+In the pop-up dialog, I have set a series of operation steps to initiate their first attempt.
 I change the word "generative" to "evolve" because I feel it's more intuitive and easy to understand -->
+<!--In the guide, I also encourage them to try the evolve mode. -->
+<!--I set the "evolve" button to be larger in size to draw their attention.-->
+<!-- But sadly, in the actual test,
+there were still some people who failed to notice this button or didn't understand it.-->
+
+
+<!--    I have included shortcut keys in the guide to enhance usability. -->
     <dialog class="guideDialog" id="guideDialog">
         <button id="closeGuide" class="closeGuide">✖</button>
         <h3>Guide</h3>
@@ -49,7 +60,9 @@ I change the word "generative" to "evolve" because I feel it's more intuitive an
 
 <div class="stageContainer" id="stageContainer">
 
-
+<!--During the test, some people thought that "preview" referred to the mapping of the current drawing content
+ and did not show any connection with "brush", so I changed the wording to "current brush".-->
+<!--I added hand-drawn icons next to the text to enhance the consistency of the entire interface.-->
     <div class="functionContainer" id="functionContainer">
         <div class="previewContainer" id="previewContainer">
             <div class="previewTitle" id="previewTitle">
@@ -137,6 +150,11 @@ I change the word "generative" to "evolve" because I feel it's more intuitive an
                 </button>
 
 
+
+<!--             The icons for "size" and "value" are a bit tricky.
+I originally intended to write text,
+but that caused a lot of trouble with my layout.
+So I placed the text in the hover tips and use two abstract icons.   -->
                 <div class="sliderContainer">
                     <div class="sizeControl">
                         <label id="sizeLabel" class="sizeLabel">

@@ -75,7 +75,9 @@ but I try to keep the texture of the paper box */
 }
 
 
-
+/*paper texture helps to improve the playfulness and feeling of drawing on the paper.
+I would like to keep the opacity of paper texture as 100% because I want a stronger feeling of paper.
+ I suppose it can reduce the "professional" feeling of the layout*/
 main {
   display: flex;
   flex-direction: column;
@@ -88,6 +90,7 @@ main {
 
 }
 
+/*I set border-radius to imitate a kid's drawing board, which is safe, playful and approachable*/
 .stageContainer {
   background-color: var(--col03);
   display:flex;
@@ -107,6 +110,7 @@ main {
   padding: clamp(0.8rem, 2vw, 1.5rem);
 }
 
+/*Hand-drawn icons are used to visually enhance the appeal of the tools.*/
 button {
   position:relative;
   cursor: pointer;
@@ -119,6 +123,11 @@ button {
 
   /*box-shadow: 0 12px 30px rgba(0,0,0,0.18)*/
 }
+
+/*I considered whether to remove the color-changing interaction of the buttons in order to maintain the primitive hand-drawn feel.
+Eventually, I didn't do that.
+I wanted to retain a bit of the electronic feel and enhance the clicking experience,
+while informing users that this button can be clicked.*/
 
 button:hover {
   /*color: var(--col02);*/
@@ -146,7 +155,8 @@ button:active {
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background-image:  url("assets/paperTexture.png");
   background-size: 100%;
-  /*I decide to decrease the size of canvas to keep the layout clean and tidy*/
+  /*I decide to decrease the size of canvas to keep the layout clean and tidy,
+  I don't want a scrollbar appears in a landscape layout*/
   /*width: min(90vw, 700px);*/
   width: min(85vw, 650px);
 
@@ -264,10 +274,11 @@ button:active {
   margin-top: -5rem;
   pointer-events: none;
 }
-
+/*prevent the pointer events from covering the canvas*/
 .saveContainer button {
   pointer-events: auto;
 }
+
 
 dialog[open]{
   margin:auto;
@@ -283,6 +294,7 @@ dialog[open]{
   background-image:  url("assets/paperTexture.png");
   background-color: var(--col06);
   box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+  color:var(--col01)
 }
 
 .closeDialog{
@@ -295,7 +307,6 @@ dialog button {
   font-family: "Caveat", cursive;
   font-size: 2rem;
   font-weight: 700;
-
   background-color: transparent;
   color: var(--col01);
   border: none;
@@ -353,7 +364,7 @@ dialog button:hover {
   font-size: 1rem;
   cursor: pointer;
 }
-
+/*The brushlibrary has its own scroll bar to prevent too many brushes from stretching the interface*/
 .brushLibrary {
   display: grid;
   grid-template-columns: repeat(6, 2rem);
@@ -397,6 +408,8 @@ dialog button:hover {
 }
 
 
+/*The close button that appears in the upper right corner conforms to the usage habits of most software.
+which means users can easily understand*/
 
 .deleteBrushBtn {
   position: absolute;
@@ -510,8 +523,16 @@ input[type="range"] {
   height: auto;
 }
 
-/*I enlarge evolve button to catch users' attention.
-To feel more paper-like, I tilt them a little. */
+/*Designing the mode buttons took me quite some effort.
+ I needed to make them prominent enough to highlight the "evolve" function,
+ while still not blocking the canvas and not being placed together with other functions.
+ So I tilted them to make them look more like movable pieces of paper,
+ and at the same time, to distinguish them from the toolbar.*/
+
+/*I enlarge evolve button to catch users' attention.*/
+
+
+
 
 .generativeModeBtn{
   right: 0.3%;
@@ -608,6 +629,10 @@ transition: transform 0.2s ease;
   width:2rem;
 }
 
+/*The tooltips are designed to appear when hovered over.
+This way, the text does not take up space in the layout,
+and it can provide a bit of description to ensure that the entire interface presents more information
+in a way that is concise, icon-based, and intuitive.*/
 .tooltips{
 position: absolute;
   bottom: 110%;
@@ -633,8 +658,13 @@ button:hover .tooltips{
 }
 
 /*Responsive layout.  */
-/*I divide the size into many parts because I don't want the export cover the canvas
-which will affect users' experience*/
+
+/*I spend a lot of time on responsive settings to make sure it can suit different size screens*/
+
+
+/*I divided "responsive" into several sections
+because I wanted to ensure that the preview window and brush library were displayed clearly.
+On different devices, different layouts are displayed.*/
 @media(min-width: 2561px ) and (min-height: 900px){
   .modeContainer {
     margin-bottom: 0rem;
@@ -888,11 +918,9 @@ which will affect users' experience*/
 
 
 
-/*to change the layout when it's landscape
-It doesn't feel good, the layout will be messy and the canvas will be too small*/
-/*I choose to let mobile phone users use portrait layout only*/
 
-/*I spend a lot of time on responsive to make sure it can suit different size*/
+
+
 
 @media (max-width: 1280px) and (max-height: 720px) {
   .modeContainer {
