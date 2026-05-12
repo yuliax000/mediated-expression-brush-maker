@@ -1,5 +1,10 @@
-/*I choose to use a hand-writing style font to create a playful atmosphere*/
+/*I choose to use a hand-writing style font to create a playful atmosphere*
+I want users to start there creation in a relaxed mood.
+ */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+
+
 
 
 body {
@@ -8,6 +13,7 @@ body {
   font-weight: 700;
   font-style: normal;
   font-size: 150%;
+  color: var(--col01);
 }
 
 
@@ -25,11 +31,46 @@ body {
   --border: solid 0.2rem var(--col06)
 }
 
+/*In the dark mode, the canvas still displays in white
+because I don't want the canvas color to affect the brush creating experience*/
+
+/*I choose a group of darker color as my dark mode style.
+The colors don't feel as playful as light mode.
+but I try to keep the texture of the paper box */
+
+/*I invert the button color for a clearer view. (It's hard to read with dark background and black font)*/
+
+
 @media (prefers-color-scheme: dark){
   :root {
     --col01: white;
     --col02: black;
+    --col03:#181923;
+    --col04: #8b7983;
+    --col05: #292d41;
+    --col06:  #b59e90 ;
+    --col07:#333346;
+    --col08: #6f687a;
+    --border: solid 0.2rem var(--col06);
 
+  }
+  .toolbarContainer img {
+    filter: invert(1);
+  }
+  .previewTitle img {
+    filter: invert(1);
+  }
+  .libraryTitle img{
+    filter: invert(1);
+}
+  .modeContainer img {
+    filter: invert(1);
+  }
+  .saveContainer img {
+    filter: invert(1);
+  }
+  .saveToBrush img {
+    filter: invert(1);
   }
 }
 
@@ -845,32 +886,7 @@ which will affect users' experience*/
   }
 }
 
-@media (max-width: 560px) {
-  .saveContainer{
-    margin-top: -2rem;
-  }
-  .functionContainer {
-    flex-direction: column;
-  }
-}
 
-
-@media (max-width: 425px) {
-
-  .saveContainer {
-    margin-top: -2rem;
-
-  }
-
-  .guide{
-    position: absolute;
-    top: 10%;
-    right: 35%;
-    padding: 0.3rem 0.3rem;
-    width:10%;
-    /*cursor: pointer;*/
-  }
-}
 
 /*to change the layout when it's landscape
 It doesn't feel good, the layout will be messy and the canvas will be too small*/
@@ -920,6 +936,57 @@ It doesn't feel good, the layout will be messy and the canvas will be too small*
 
 
 
+}
+@media (max-width: 560px) {
+  .saveContainer{
+    margin-top: -2rem;
+  }
+  .functionContainer {
+    flex-direction: column;
+  }
+
+  .defaultModeBtn{
+    position: absolute;
+    right: 20%;
+    top: 6%;
+    padding: 0.6rem;
+    width:13%;
+  }
+
+  .generativeModeBtn {
+    right: 1%;
+    top: 4%;
+    position: absolute;
+    padding: 0.6rem;
+    width: 21%;
+  }
+
+  .guide {
+    top: 10%;
+    right: 35%;
+    padding: 0.3rem 0.3rem;
+    width:10%;
+  }
+
+
+}
+
+
+@media (max-width: 425px) {
+
+  .saveContainer {
+    margin-top: -2rem;
+
+  }
+
+  .guide{
+    position: absolute;
+    top: 10%;
+    right: 35%;
+    padding: 0.3rem 0.3rem;
+    width:10%;
+    /*cursor: pointer;*/
+  }
 }
 
 
