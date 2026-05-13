@@ -1,6 +1,7 @@
 
 
-//I use a modal with some instruction to guide users simply when first open the page.
+//For learnability, I use a modal with some instruction to guide users simply when first open the page.
+
 
 
 
