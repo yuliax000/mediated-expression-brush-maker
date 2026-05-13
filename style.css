@@ -100,7 +100,7 @@ main {
   min-height: auto;
   width: auto;
   flex: 1;
-  cursor:crosshair;
+  cursor:default;
   align-items: flex-start;
   justify-content: center;
   border-radius: 3rem;
@@ -229,6 +229,7 @@ button:active {
   min-width: 0;
   aspect-ratio: 1/1;
   background-color: white;
+  cursor: crosshair;
 }
 
 .mainContainer {

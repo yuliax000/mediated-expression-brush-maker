@@ -853,7 +853,18 @@ opacitySlider.addEventListener("input", function(){
           context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
           layer.batchDraw();
-          updateBrushPreview();
+
+          if (brushMode === "generative"){
+              updateBrushFromCurrentCanvas();
+              currentBrushSource = brushCanvas;
+              updateBrushPreview(currentBrushSource);
+          } else {
+              updateBrushPreview(currentBrushSource);
+          }
+
+
+
+          // updateBrushPreview();
 
           img.removeEventListener("load", drawOnLoad);
 
