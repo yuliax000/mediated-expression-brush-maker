@@ -297,7 +297,8 @@ dialog[open]{
   background-image:  url("assets/paperTexture.png");
   background-color: var(--col06);
   box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
-  color:var(--col01)
+  color:var(--col01);
+  width: 50%;
 }
 
 .closeDialog{
