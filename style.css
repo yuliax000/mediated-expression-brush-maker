@@ -92,6 +92,137 @@ main {
 
 }
 
+dialog[open]{
+  margin:auto;
+  padding: 1rem;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 2rem;
+  gap: 1rem;
+  z-index: 99;
+  background-image:  url("assets/paperTexture.png");
+  background-color: var(--col06);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+  color:var(--col01);
+  width: 50%;
+}
+
+.closeDialog{
+  cursor: pointer;
+}
+
+dialog button {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: "Caveat", cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  background-color: transparent;
+  color: var(--col01);
+  border: none;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+
+  /*border: 0.15rem solid var(--col01);*/
+  /*border-radius: 1rem;*/
+
+  padding: 0.4rem 1rem;
+  /*box-shadow: 0 6px 12px rgba(0,0,0,0.15);*/
+}
+
+dialog button:hover {
+  background-color: transparent;
+}
+
+
+
+.guide{
+  position: absolute;
+  top: 3%;
+  right: 22%;
+  padding: 0.3rem 0.3rem;
+  width:5%;
+  /*cursor: pointer;*/
+}
+
+
+.guideDialog{
+  position: absolute;
+  top: 10rem;
+  left: 1rem;
+  width: 80%;
+  max-width: 100vw;
+  height: auto;
+  padding: 1.2rem;
+  border: solid 0.1rem var(--col05);
+  border-radius: 1rem;
+  background: var(--col08);
+  color: var(--col01);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+  background-image:  url("assets/paperTexture.png");
+
+}
+
+.guideDialog::backdrop{
+  background: transparent;
+}
+
+.closeGuide {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.guideContent {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-direction: row;
+
+  font-size: 80%;
+}
+
+.guideWelcome {
+  flex: 1.3;
+}
+
+.guideWelcome h2 {
+  margin-bottom : 0.8rem;
+}
+
+.guideShortcuts{
+  flex:1;
+  padding-left: 2rem;
+  border-left: solid 0.15rem var(--col05);
+
+}
+
+.guideShortcuts h3{
+  margin-bottom:0.8rem;
+}
+.guideShortcuts p{
+  margin-bottom: 0.3rem;
+}
+
+.guideShortcuts span{
+  display: inline-block;
+  min-width: 4rem;
+  font-weight: bold;
+}
+
+
+
+
+
+
 /*I set border-radius to imitate a kid's drawing board, which is safe, playful and approachable*/
 .stageContainer {
   background-color: var(--col03);
@@ -283,91 +414,7 @@ button:active {
 }
 
 
-dialog[open]{
-  margin:auto;
-  padding: 1rem;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 2rem;
-  gap: 1rem;
-  z-index: 99;
-  background-image:  url("assets/paperTexture.png");
-  background-color: var(--col06);
-  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
-  color:var(--col01);
-  width: 50%;
-}
 
-.closeDialog{
-  cursor: pointer;
-}
-
-dialog button {
-  appearance: none;
-  -webkit-appearance: none;
-  font-family: "Caveat", cursive;
-  font-size: 2rem;
-  font-weight: 700;
-  background-color: transparent;
-  color: var(--col01);
-  border: none;
-  outline: none;
-  background: transparent;
-  box-shadow: none;
-
-  /*border: 0.15rem solid var(--col01);*/
-  /*border-radius: 1rem;*/
-
-  padding: 0.4rem 1rem;
-  /*box-shadow: 0 6px 12px rgba(0,0,0,0.15);*/
-}
-
-dialog button:hover {
-  background-color: transparent;
-}
-
-
-
-.guide{
-  position: absolute;
-  top: 3%;
-  right: 22%;
-  padding: 0.3rem 0.3rem;
-  width:5%;
-  /*cursor: pointer;*/
-}
-.guideDialog{
-  position: absolute;
-  top: 4rem;
-  left: 1rem;
-  width: 30rem;
-  max-width: 100vw;
-  height: auto;
-  padding: 1.2rem;
-  border: solid 0.1rem var(--col05);
-  border-radius: 1rem;
-  background: var(--col08);
-  color: var(--col01);
-  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
-  background-image:  url("assets/paperTexture.png");
-}
-
-.guideDialog::backdrop{
-  background: transparent;
-}
-
-.closeGuide {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  cursor: pointer;
-}
 /*The brushlibrary has its own scroll bar to prevent too many brushes from stretching the interface*/
 .brushLibrary {
   display: grid;

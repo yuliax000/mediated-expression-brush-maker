@@ -12,41 +12,67 @@
 <body>
 <main>
 
-<dialog class="startGuide" id="startGuide">
-<!--    I use question and a set of procedures to guide users explore my tool-->
-<!--I think the question can arouse their curiosity.-->
-<!--    And these steps can guide their first step of exploration.-->
-<!--    <p>How to get your brush evolve?</p>-->
+    <!--<dialog class="startGuide" id="startGuide">-->
+    <!--    I use question and a set of procedures to guide users explore my tool-->
+    <!--I think the question can arouse their curiosity.-->
+    <!--    And these steps can guide their first step of exploration.-->
+    <!--    <p>How to get your brush evolve?</p>-->
 
-    <p>Welcome! Try clicking “Evolve” and drawing a simple shape on the canvas to see how the brush changes over time. You can adjust the sliders, experiment freely, and discover unexpected textures and forms as you create your own evolving brushes and artwork.</p>
-    <button class="closeDialog" id="closeDialog">OK</button>
-</dialog>
+    <!--    <p>Welcome! Try clicking “Evolve”
+    and drawing a simple shape on the canvas to see how the brush changes over time.
+     You can adjust the sliders, experiment freely, and discover unexpected textures
+     and forms as you create your own evolving brushes and artwork.</p>-->
+    <!--    <button class="closeDialog" id="closeDialog">OK</button>-->
+    <!--</dialog>-->
 
-<!--    I still hope that users can discover the interesting aspects of the website through exploration,
- so I didn't describe the website's logic overly clear.
-In the pop-up dialog, I have set a series of operation steps to initiate their first attempt.
-I change the word "generative" to "evolve" because I feel it's more intuitive and easy to understand -->
-<!--In the guide, I also encourage them to try the evolve mode. -->
-<!--I set the "evolve" button to be larger in size to draw their attention.-->
-<!-- But sadly, in the actual test,
-there were still some people who failed to notice this button or didn't understand it.-->
+    <!--    I still hope that users can discover the interesting aspects of the website through exploration,
+     so I didn't describe the website's logic overly clear.
+    In the pop-up dialog, I have set a series of operation steps to initiate their first attempt.
+    I change the word "generative" to "evolve" because I feel it's more intuitive and easy to understand -->
+    <!--In the guide, I also encourage them to try the evolve mode. -->
+    <!--I set the "evolve" button to be larger in size to draw their attention.-->
+    <!-- But sadly, in the actual test,
+    there were still some people who failed to notice this button or didn't understand it.-->
 
 
-<!--    I have included shortcut keys in the guide to enhance usability. -->
+    <!--    I have included shortcut keys in the guide to enhance usability. -->
     <dialog class="guideDialog" id="guideDialog">
         <button id="closeGuide" class="closeGuide">✖</button>
-        <h3>Guide</h3>
-        <p>Evolve mode → G (Have a try?) </p>
-        <p>Normal mode → N (stop evolve)</p>
-        <p>Brush  →  B</p>
-        <p>Eraser  → E </p>
-        <p>Spray tool → S </p>
-        <p>Black color palette → go back to black</p>
-        <p>Color palette → get a random color</p>
-        <p>Undo → ctrl+Z</p>
-        <p>Redo → ctrl+Y</p>
-        <p>Save Brush → save your brush to library</p>
-        <p>Export → export your artwork in png format</p>
+
+        <div class="guideContent">
+            <section class="guideWelcome">
+            <h2>Welcome!</h2>
+            <p>Welcome! Try clicking “Evolve”
+                and drawing a simple shape on the canvas to see how the brush changes over time.
+                You can adjust the sliders, experiment freely, and discover unexpected textures
+                and forms as you create your own evolving brushes and artwork.</p>
+        </section>
+            <section class="guideShortcuts" >
+                <h3>Shortcuts</h3>
+                <p>Evolve mode → G (Have a try?) </p>
+                <p>Normal mode → N (stop evolve)</p>
+                <p>Brush  →  B</p>
+                <p>Eraser  → E </p>
+                <p>Spray tool → S </p>
+                <p>go back to black → L</p>
+                <p>Color palette → R</p>
+                <p>Undo → ctrl+Z</p>
+                <p>Redo → ctrl+Y</p>
+                <p>Save Brush (to library) → K</p>
+                <p>Export → P</p>
+                <p>Clean → C</p>
+            </section>
+
+
+
+        </div>
+
+
+
+
+
+
+
 
 
 
@@ -54,143 +80,143 @@ there were still some people who failed to notice this button or didn't understa
 
 
 
-<div class="stageContainer" id="stageContainer">
+    <div class="stageContainer" id="stageContainer">
 
-<!--During the test, some people thought that "preview" referred to the mapping of the current drawing content
- and did not show any connection with "brush", so I changed the wording to "current brush".-->
-<!--I added hand-drawn icons next to the text to enhance the consistency of the entire interface.-->
-    <div class="functionContainer" id="functionContainer">
-        <div class="previewContainer" id="previewContainer">
-            <div class="previewTitle" id="previewTitle">
-                <img src="assets/preview.png" alt="previewPNG">
-                <p>Current Brush</p>
-            </div>
-
-            <div class="brushPreviewWindow" id="brushPreviewWindow">
-                <canvas  class="previewCanvas" id="previewCanvas" width="120" height="120"></canvas>
-            </div>
-            <button class="saveToBrush" id="saveToBrush">
-                <img src="assets/saveBrush.png" alt="saveBrushPNG">
-            </button>
-        </div>
-        <div class="libraryContainer" id="libraryContainer">
-            <div class="libraryTitle" id="libraryTitle">
-                <img src="assets/library.png" alt="libraryPNG">
-                <p>Brush Library</p>
-            </div>
-
-            <div class="brushLibrary" id="brushLibrary">
-
-            </div>
-        </div>
-
-    </div>
-
-<div class="mainContainer" id="mainContainer">
-    <div class="modeContainer" id="modeContainer">
-        <button id="guide" class="guide">
-            <img src="assets/guide.png" alt="guidePNG">
-
-        </button>
-        <button id="defaultModeBtn" class="defaultModeBtn">
-            <img src="assets/normal.png" alt="defaultModePNG">
-        </button>
-        <button class="generativeModeBtn" id="generativeModeBtn">
-            <img src="assets/evolve.png" alt="generativePNG" >
-        </button>
-
-    </div>
-    <div class="canvasContainer" id="canvasContainer">
-    <div class="toolbarContainer" id="toolbarContainer">
-        <div class="toolbar" id="toolbar">
-            <div class="tools" id="tools">
-                <button id="brushBtn">
-                    <img src="assets/pencil.png" alt="brushPNG">
-<!--                    I add small tips, while hover it will appear to guide users-->
-                    <span class="tooltips">Brush</span>
-                </button>
-                <button id="eraserBtn">
-                    <img src="assets/eraser.png" alt="eraserPNG">
-                    <span class="tooltips">Eraser</span>
-                </button>
-                <button id="sprayBtn">
-                    <img src="assets/spray.png" alt="sprayPNG">
-                    <span class="tooltips">Spray tool</span>
-                </button>
-
-
-
-
-                <button id="blackBtn">
-                    <img src="assets/black.png" alt="blackPNG">
-                    <span class="tooltips">Black</span>
-                </button>
-
-                <button id="colorBtn">
-                    <img src="assets/color.png" alt="colorPNG">
-                    <span class="tooltips">Change a color?</span>
-
-                </button>
-
-                <button id="undoBtn">
-                    <img src="assets/undo.png" alt="undoPNG">
-                    <span class="tooltips">Undo</span>
-                </button>
-                <button id="redoBtn">
-                    <img src="assets/redo.png" alt="redoPNG">
-                    <span class="tooltips">Redo</span>
-                </button>
-                <button id="clearBtn">
-                    <img src="assets/clean.png" alt="cleanPNG">
-                    <span class="tooltips">Clean</span>
-                </button>
-
-
-
-<!--             The icons for "size" and "value" are a bit tricky.
-I originally intended to write text,
-but that caused a lot of trouble with my layout.
-So I placed the text in the hover tips and use two abstract icons.   -->
-                <div class="sliderContainer">
-                    <div class="sizeControl">
-                        <label id="sizeLabel" class="sizeLabel">
-                            <span>●</span>
-                            <span class="tooltips">Size</span></label>
-
-                        <input type="range" id="sizeSlider" min="5" max="400" value="40">
-                        <!-- I decide to add a text showing value because that allows users changing the size precisely-->
-                        <span id="sizeValue">40</span>
-
-                    </div>
-                    <div class="opacityControl">
-                        <label id="opacityLabel" class="opacityLabel">
-                            <span>◐</span>
-                            <span class="tooltips">Opacity</span>
-                            </label>
-
-                        <input type="range" id="opacitySlider" min="0" max="1" step="0.01" value="1">
-                        <span id="opacityValue">1</span>
-                    </div>
+        <!--During the test, some people thought that "preview" referred to the mapping of the current drawing content
+         and did not show any connection with "brush", so I changed the wording to "current brush".-->
+        <!--I added hand-drawn icons next to the text to enhance the consistency of the entire interface.-->
+        <div class="functionContainer" id="functionContainer">
+            <div class="previewContainer" id="previewContainer">
+                <div class="previewTitle" id="previewTitle">
+                    <img src="assets/preview.png" alt="previewPNG">
+                    <p>Current Brush</p>
                 </div>
 
+                <div class="brushPreviewWindow" id="brushPreviewWindow">
+                    <canvas  class="previewCanvas" id="previewCanvas" width="120" height="120"></canvas>
+                </div>
+                <button class="saveToBrush" id="saveToBrush">
+                    <img src="assets/saveBrush.png" alt="saveBrushPNG">
+                </button>
             </div>
+            <div class="libraryContainer" id="libraryContainer">
+                <div class="libraryTitle" id="libraryTitle">
+                    <img src="assets/library.png" alt="libraryPNG">
+                    <p>Brush Library</p>
+                </div>
+
+                <div class="brushLibrary" id="brushLibrary">
+
+                </div>
+            </div>
+
         </div>
 
-    </div>
-        <div class="canvas" id="canvas">canvas</div>
-<!--        <div class="saveContainer" id="saveContainerLandscape" >-->
-<!--            <button class="export" id="exportLandscape">-->
-<!--                <img src="assets/export.png" alt="exportPNG">-->
-<!--            </button>-->
-<!--        </div>-->
+        <div class="mainContainer" id="mainContainer">
+            <div class="modeContainer" id="modeContainer">
+                <button id="guide" class="guide">
+                    <img src="assets/guide.png" alt="guidePNG">
 
-    </div>
-    <div class="saveContainer" id="saveContainer" >
-        <button class="export" id="export">
-            <img src="assets/export.png" alt="exportPNG">
-        </button>
-    </div>
-    </div>
+                </button>
+                <button id="defaultModeBtn" class="defaultModeBtn">
+                    <img src="assets/normal.png" alt="defaultModePNG">
+                </button>
+                <button class="generativeModeBtn" id="generativeModeBtn">
+                    <img src="assets/evolve.png" alt="generativePNG" >
+                </button>
+
+            </div>
+            <div class="canvasContainer" id="canvasContainer">
+                <div class="toolbarContainer" id="toolbarContainer">
+                    <div class="toolbar" id="toolbar">
+                        <div class="tools" id="tools">
+                            <button id="brushBtn">
+                                <img src="assets/pencil.png" alt="brushPNG">
+                                <!--                    I add small tips, while hover it will appear to guide users-->
+                                <span class="tooltips">Brush</span>
+                            </button>
+                            <button id="eraserBtn">
+                                <img src="assets/eraser.png" alt="eraserPNG">
+                                <span class="tooltips">Eraser</span>
+                            </button>
+                            <button id="sprayBtn">
+                                <img src="assets/spray.png" alt="sprayPNG">
+                                <span class="tooltips">Spray tool</span>
+                            </button>
+
+
+
+
+                            <button id="blackBtn">
+                                <img src="assets/black.png" alt="blackPNG">
+                                <span class="tooltips">Black</span>
+                            </button>
+
+                            <button id="colorBtn">
+                                <img src="assets/color.png" alt="colorPNG">
+                                <span class="tooltips">Change a color?</span>
+
+                            </button>
+
+                            <button id="undoBtn">
+                                <img src="assets/undo.png" alt="undoPNG">
+                                <span class="tooltips">Undo</span>
+                            </button>
+                            <button id="redoBtn">
+                                <img src="assets/redo.png" alt="redoPNG">
+                                <span class="tooltips">Redo</span>
+                            </button>
+                            <button id="clearBtn">
+                                <img src="assets/clean.png" alt="cleanPNG">
+                                <span class="tooltips">Clean</span>
+                            </button>
+
+
+
+                            <!--             The icons for "size" and "value" are a bit tricky.
+                            I originally intended to write text,
+                            but that caused a lot of trouble with my layout.
+                            So I placed the text in the hover tips and use two abstract icons.   -->
+                            <div class="sliderContainer">
+                                <div class="sizeControl">
+                                    <label id="sizeLabel" class="sizeLabel">
+                                        <span>●</span>
+                                        <span class="tooltips">Size</span></label>
+
+                                    <input type="range" id="sizeSlider" min="5" max="400" value="40">
+                                    <!-- I decide to add a text showing value because that allows users changing the size precisely-->
+                                    <span id="sizeValue">40</span>
+
+                                </div>
+                                <div class="opacityControl">
+                                    <label id="opacityLabel" class="opacityLabel">
+                                        <span>◐</span>
+                                        <span class="tooltips">Opacity</span>
+                                    </label>
+
+                                    <input type="range" id="opacitySlider" min="0" max="1" step="0.01" value="1">
+                                    <span id="opacityValue">1</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="canvas" id="canvas">canvas</div>
+                <!--        <div class="saveContainer" id="saveContainerLandscape" >-->
+                <!--            <button class="export" id="exportLandscape">-->
+                <!--                <img src="assets/export.png" alt="exportPNG">-->
+                <!--            </button>-->
+                <!--        </div>-->
+
+            </div>
+            <div class="saveContainer" id="saveContainer" >
+                <button class="export" id="export">
+                    <img src="assets/export.png" alt="exportPNG">
+                </button>
+            </div>
+        </div>
 
     </div>
 

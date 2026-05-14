@@ -12,13 +12,13 @@
 //         3. if users need help, they can find the instruction in the page manually,
 // providing options for users with different drawing experience.
 
-const startGuide = document.getElementById("startGuide");
-const closeDialog = document.getElementById("closeDialog");
-startGuide.showModal();
-
-closeDialog.addEventListener("click", () => {
-    startGuide.close();
-})
+// const startGuide = document.getElementById("startGuide");
+// const closeDialog = document.getElementById("closeDialog");
+// startGuide.showModal();
+//
+// closeDialog.addEventListener("click", () => {
+//     startGuide.close();
+// })
 
 
 const guideBtn = document.getElementById("guide");
@@ -281,8 +281,39 @@ window.addEventListener("keydown", function (event) {
         redoState();
     }
 
+    if (event.key === "l"){
+        currentColor = "#000000";
+        tintBrushCanvas(currentColor);
+        currentBrushSource = brushCanvas;
+        updateBrushPreview(currentBrushSource);
 
 
+    }
+
+    if (event.key === "r"){
+
+        currentColor = getRandomColor();
+        tintBrushCanvas(currentColor);
+        currentBrushSource = brushCanvas;
+        updateBrushPreview(currentBrushSource);
+
+    }
+
+    if(event.key === "p") {
+        exportPNG();
+    }
+
+
+    if(event.key === "k"){
+        saveBrushToLibrary();
+        syncBrushPreview();
+    }
+
+    if(event.key === "c"){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        hasCanvasContent = false;
+        layer.batchDraw();
+    }
 
 });
 
@@ -615,7 +646,7 @@ const defaultBrushURL = "assets/defaultBrushSmall.png";
 
 saveToBrushBtn.addEventListener("click", function(){
     saveBrushToLibrary();
-    syncBrushPreview()
+    syncBrushPreview();
 })
 loadBrushLibrary();
 
