@@ -1,24 +1,22 @@
 
 
-//For learnability, I use a modal with some instruction to guide users simply when first open the page.
+//For learnability, I use a modal with some friendly instruction to guide users simply when first open the page.
+//
 
 
 
 
 // A guide box can be opened with a single click to provide more detailed instructions (The button is a hand-drawing question mark).
 
-// reason: 1. clear and simple
-//         2. Placed at the beginning, so it doesn’t interrupt the user experience.
-//         3. if users need help, they can find the instruction in the page manually,
-// providing options for users with different drawing experience.
 
-// const startGuide = document.getElementById("startGuide");
-// const closeDialog = document.getElementById("closeDialog");
-// startGuide.showModal();
-//
-// closeDialog.addEventListener("click", () => {
-//     startGuide.close();
-// })
+
+const startGuide = document.getElementById("startGuide");
+const closeDialog = document.getElementById("closeDialog");
+startGuide.showModal();
+
+closeDialog.addEventListener("click", () => {
+    startGuide.close();
+})
 
 
 const guideBtn = document.getElementById("guide");
@@ -374,21 +372,12 @@ image.on("mousedown touchstart", function(){
 
 
 // make sure the brush preview has been updated after mouseup, so that the users can see the brush change immediately.
-stage.on("mouseup touchend", function(){
+stage.on("mouseup touchend",finishStroke);
 
 
-    if (isPaint && (drawMode === "brush" || drawMode === "eraser" || drawMode === "spray")) {
-        hasCanvasContent = true;
+window.addEventListener("mouseup", finishStroke);
 
-        // for easier management, I write a new function to update brush and preview
-        evolveBrushIfNeeded();
-
-    }
-    saveCanvasState();
-    // updateBrushFromCurrentCanvas();
-    isPaint = false;
-});
-
+window.addEventListener("touchend", finishStroke);
 
 // adding throttle to mousemove, for better controlling the spacing between each point and reducing computational power consumption
 //  requestAnimationFrame: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
@@ -397,6 +386,14 @@ stage.on("mouseup touchend", function(){
 // seems requestAnimationFrame is better for visual performance.
 let rafId;
 let latestPos;
+
+
+
+
+
+
+
+
 
 stage.on("mousemove touchmove", function(){
     if(!isPaint){
@@ -779,6 +776,20 @@ function syncToolSliders () {
 
     }
 
+}
+
+// I add a separate function to control the brush triggering "mouseup" outside the canvas
+function finishStroke() {
+    if (!isPaint) return;
+
+    if (drawMode === "brush" || drawMode === "eraser" || drawMode === "spray") {
+        hasCanvasContent = true;
+        evolveBrushIfNeeded();
+        saveCanvasState();
+    }
+
+    isPaint = false;
+    rafId = null;
 }
 
 // Reference on Procreate, I only prepare two sliders so that the Interface is minimal and simple
