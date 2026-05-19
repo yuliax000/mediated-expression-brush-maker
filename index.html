@@ -13,6 +13,36 @@
 <body>
 <main>
 
+<!--   The tool is designed for users with no prior experience using drawing software, as well as drawing enthusiasts.
+. For users who have never used drawing software before,
+although I provided icons that I considered relatively intuitive,
+ I still chose to include text descriptions and guidance.
+  For users with previous experience using drawing software,
+ the icons and layout of this tool are similar to those found in most drawing applications,
+  allowing them to transfer their existing knowledge and experience into the creative process.
+  This tool aims to lower the barrier to creating brushes while also supporting creative drawing experiences.
+Therefore, the canvas and toolbar are designed as the largest and most visually prominent elements of the interface.
+ I introduced two modes, Normal and Evolve.
+ Even if users are not interested in the core evolving functionality,
+ they can still enjoy drawing directly on the canvas.
+At the same time, users who want to explore further can experience the evolving brush textures in greater depth,
+increasing the sense of control and flexibility.
+I adopted a paper-and-pencil-inspired interface and hand-drawn icons to reinforce the theme of a drawing tool.
+I also wanted to reduce the overly professional feeling of the software
+(since the layout shares similarities with professional tools)
+and make it as approachable as possible for everyone.
+The irregular torn-paper edges were designed to evoke memories of casually drawing on paper during childhood,
+helping to reduce the psychological barrier to starting the drawing process.
+After allowing some users with no previous drawing software experience to test the tool,
+they reported that they were able to engage with the drawing process
+ and experience the brush evolution feature successfully.
+
+-->
+
+
+
+
+
     <dialog class="startGuide" id="startGuide">
         <!--    I primitively use question and a set of procedures to guide users explore my tool-->
         <!--I thought the question can arouse their curiosity.-->
@@ -43,7 +73,13 @@
     <!--I set the "evolve" button to be larger in size to draw their attention. -->
 
 
-    <!--    I have included shortcuts in the guide to enhance usability. -->
+    <!--
+    Constantly clicking through the toolbar may interrupt the drawing experience,
+    so once users become familiar with the basic functions of the buttons,
+    they can quickly access these features through shortcuts.-->
+
+<!--    I intentionally avoided excessive descriptions of functions because I considered them unnecessary.
+ Many features can be learned naturally through exploration-->
     <dialog class="guideDialog" id="guideDialog">
         <button id="closeGuide" class="closeGuide">✖</button>
 
@@ -93,7 +129,7 @@
 
         <!--During the test, some people thought that "preview" referred to the mapping of the current drawing content
          and did not show any connection with "brush", so I changed the wording to "current brush".-->
-        <!--I added hand-drawn icons next to the text to enhance the consistency of the entire interface.-->
+        <!--I added hand-drawn icons to enhance the consistency of the entire interface.-->
         <div class="functionContainer" id="functionContainer">
             <div class="previewContainer" id="previewContainer">
                 <div class="previewTitle" id="previewTitle">
@@ -185,7 +221,9 @@
                             <!--             The icons for "size" and "value" are a bit tricky.
                             I originally intended to write text,
                             but that caused a lot of trouble with my layout.
-                            So I placed the text in the hover tips and use two abstract icons.   -->
+                            So I placed the text in the hover tips and use two abstract icons.
+                             These two icons dynamically change along with the slider,
+                              visually indicating the function associated with each slider.-->
                             <div class="sliderContainer">
                                 <div class="sizeControl">
                                     <label id="sizeLabel" class="sizeLabel" data-tooltip="Size">
@@ -236,7 +274,10 @@
 
     </div>
 
-
+<!--I used floating tooltips as guidance for the tools to prevent the icons from being too abstract
+and causing confusion for users. To prevent the tooltips from being clipped by the mask,
+I chose not to place them inside the button div and instead created them as separate global tooltips.
+When the mouse hovers over an icon, a tooltip appears to explain the function of that button.-->
 <div class="globalTooltip" id="globalTooltip"></div>
 
 

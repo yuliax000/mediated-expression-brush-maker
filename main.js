@@ -515,6 +515,9 @@ stage.on("mousemove touchmove", function(){
 })
 
 // get a preview window. idea: create a new small canvas to show current main canvas container.
+// The preview window is essential,
+// as it allows users to view their current brush and preview its appearance in a smaller display area.
+// A visually prominent preview window also reminds users that the core purpose of the tool is to create and experience brushes.
 const previewCanvas = document.getElementById("previewCanvas");
 const previewContext = previewCanvas.getContext("2d");
 
@@ -601,6 +604,8 @@ function updateBrushFromCurrentCanvas(){
 
 // Users can stamp a picture by clicking the mouse
 // therefore they can create brushes by creating points (more expressive)
+//During experimentation, this feature proved to be a convenient way to generate large amounts of repeated textures.
+// It was highly engaging and provided a playful click-based interaction experience.
 function stampSingle(point, brushSource, size, mode = "draw"){
     context.save();
     const x = point.x - size/2;
@@ -619,7 +624,7 @@ function stampSingle(point, brushSource, size, mode = "draw"){
 }
 
 // preview function
-// This function could be a clue of finding out the logic of this tool (after test: no it couldn't).
+// This function could be a clue of finding out the logic of this tool (after test: need more hint).
 function updateBrushPreview(source = currentBrushSource) {
     previewContext.clearRect(0,0,previewCanvas.width, previewCanvas.height);
     // const previewSize= 80;
@@ -640,6 +645,10 @@ function updateCurrentBrushSource(){
     // I made a change to default mode.
     //The previous one is drawing through a default circle
     // Now default mode means stop evolving the brush.
+    // I made this change because a circular brush is already provided as the default brush,
+    // allowing users to switch back to it at any time.
+    // Replacing this mode with one that supports different custom brushes enhances the playfulness of the experience
+    // and gives users a greater sense of control.
     if (brushMode === "default"){
         currentBrushSource = brushCanvas;
     }
@@ -669,6 +678,11 @@ function syncBrushPreview(){
 // Brush Library implementation
 // create and array----save brush to DataURL --- create thumbnails through dataURL---append them into library array
 // ---- set image to brush
+
+// The brush library feature allows users to save their favorite brushes at any time,
+// reducing the psychological pressure during the creative process.
+// Users do not need to feel that they must create the perfect brush in a single attempt;
+// instead, they can save different versions and continue refining them over time.
 
 
 //Get the elements
@@ -835,6 +849,9 @@ function finishStroke() {
 
 // Reference on Procreate, I only prepare two sliders so that the Interface is minimal and simple
 // When change tools, the slider will automatically change to adjust that tool.
+//The size and opacity functions not only give users greater control over the brush,
+// but also help them observe the brush more clearly.
+// This supports users in understanding and making use of the brush evolution logic.
 sizeSlider.addEventListener("input", function(){
 
     if (drawMode === "brush" || drawMode === "spray"){
@@ -874,7 +891,7 @@ opacitySlider.addEventListener("input", function(){
 // The spray gun tool offers users more options and a richer painting experience.
 // I use the canvas image as the pattern for the spray gun,
 // so when the user zooms in, they can clearly see a large number of brush pattern
-// it can be used to create randomly repeating patterns.
+// it can be used to create randomly repeating patterns and adding textures to the artwork.
 
 function sprayLine(start, end, brushSource, radius, density, particleSize, mode = "draw") {
     const distance = getDistance(start, end);
@@ -959,6 +976,9 @@ function drawDataURLToCanvas(imgDataURL){
 }
 
 // The undo and redo functions enhance the usability of the tool.
+//In digital drawing, a single mistake can sometimes affect an entire artwork.
+// The undo and redo functions allow users to create more freely and confidently,
+// without worrying about making mistakes.
 
 function undoState() {
     if(undoStack.length > 0){
@@ -996,6 +1016,9 @@ function redoState(){
 // I chose some soft and non-striking colors,
 // hoping that users won't feel irritated or uncomfortable when using them.
 // If users want to keep the colors, they can do so by saving them as brushes.
+// Color is not the main focus of the website,
+// so the random color feature exists primarily to add an element of playfulness.
+// I did not want users to spend too much time adjusting and selecting colors.
 
 function getRandomColor() {
     const index = Math.floor(Math.random() * colorPalette.length);
@@ -1092,7 +1115,13 @@ function evolveBrushIfNeeded(){
     updateBrushFromCurrentCanvas();
 
     // I choose to let the color evolve with brush.
+    // This introduces greater randomness to the brush,
+    // where unpredictability creates opportunities for exploration and challenge.
     // click the color change button will change the color temporarily, then color evolves with canvas
+
+
+
+
     // tintBrushCanvas(currentColor);
     currentBrushSource = brushCanvas;
     // stop drawing then update the preview canvas, so that users can view current brush before their next draw
