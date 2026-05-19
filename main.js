@@ -50,6 +50,8 @@ const blackBtn = document.getElementById("blackBtn");
 const colorBtn = document.getElementById("colorBtn");
 const exportPngBtn = document.getElementById("export");
 
+const tooltip = document.querySelector("#globalTooltip");
+
 
 
 
@@ -226,6 +228,44 @@ blackBtn.addEventListener("click", () => {
 exportPngBtn.addEventListener("click", () => {
     exportPNG();
 })
+
+
+document.querySelectorAll("[data-tooltip]").forEach(element => {
+    element.addEventListener("mouseenter", () => {
+        tooltip.textContent = element.dataset.tooltip;
+
+        const rect = element.getBoundingClientRect();
+
+        tooltip.style.left = rect.left  + "px";
+        tooltip.style.top = rect.top -10 + "px";
+        tooltip.style.transform = "translate (-50%, -100%)";
+
+        tooltip.style.opacity = 1;
+    })
+
+
+
+    // I try a method that tooltip will appear when hover on the buttons, and it will move with mouse
+    // However, it feels annoyed if it moves with mouse.
+    // The tooltip appears at a fixed position while hovering is better. simple and clean.
+
+
+    // element.addEventListener("mousemove", (e) => {
+    //
+    //     tooltip.style.left = e.clientX + "px";
+    //     tooltip.style.top = e.clientY + "px";
+    // })
+
+    element.addEventListener("mouseleave", () => {
+        tooltip.style.opacity = 0;
+    })
+
+})
+
+
+
+
+
 
 
 // I add some shortcuts for users who had drawing tool experience.

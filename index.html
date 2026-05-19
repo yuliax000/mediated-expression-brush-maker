@@ -138,45 +138,45 @@
                 <div class="toolbarContainer" id="toolbarContainer">
                     <div class="toolbar" id="toolbar">
                         <div class="tools" id="tools">
-                            <button id="brushBtn">
+                            <button id="brushBtn" data-tooltip = "Brush">
                                 <img src="assets/pencil.png" alt="brushPNG">
                                 <!--                    I add small tips, while hover it will appear to guide users-->
-                                <span class="tooltips">Brush</span>
+<!--                                <span class="tooltips">Brush</span>-->
                             </button>
-                            <button id="eraserBtn">
+                            <button id="eraserBtn" data-tooltip = "Eraser">
                                 <img src="assets/eraser.png" alt="eraserPNG">
-                                <span class="tooltips">Eraser</span>
+<!--                                <span class="tooltips">Eraser</span>-->
                             </button>
-                            <button id="sprayBtn">
+                            <button id="sprayBtn" data-tooltip = "Spray tool">
                                 <img src="assets/spray.png" alt="sprayPNG">
-                                <span class="tooltips">Spray tool</span>
+<!--                                <span class="tooltips">Spray tool</span>-->
                             </button>
 
 
 
 
-                            <button id="blackBtn">
+                            <button id="blackBtn" data-tooltip = "Black">
                                 <img src="assets/black.png" alt="blackPNG">
-                                <span class="tooltips">Black</span>
+<!--                                <span class="tooltips">Black</span>-->
                             </button>
 
-                            <button id="colorBtn">
+                            <button id="colorBtn" data-tooltip = "Change a Color?">
                                 <img src="assets/color.png" alt="colorPNG">
-                                <span class="tooltips">Change a color?</span>
+<!--                                <span class="tooltips">Change a color?</span>-->
 
                             </button>
 
-                            <button id="undoBtn">
+                            <button id="undoBtn" data-tooltip = "Undo">
                                 <img src="assets/undo.png" alt="undoPNG">
-                                <span class="tooltips">Undo</span>
+<!--                                <span class="tooltips">Undo</span>-->
                             </button>
-                            <button id="redoBtn">
+                            <button id="redoBtn" data-tooltip = "Redo">
                                 <img src="assets/redo.png" alt="redoPNG">
-                                <span class="tooltips">Redo</span>
+<!--                                <span class="tooltips">Redo</span>-->
                             </button>
-                            <button id="clearBtn">
+                            <button id="clearBtn" data-tooltip = "Clean">
                                 <img src="assets/clean.png" alt="cleanPNG">
-                                <span class="tooltips">Clean</span>
+<!--                                <span class="tooltips">Clean</span>-->
                             </button>
 
 
@@ -187,9 +187,10 @@
                             So I placed the text in the hover tips and use two abstract icons.   -->
                             <div class="sliderContainer">
                                 <div class="sizeControl">
-                                    <label id="sizeLabel" class="sizeLabel">
+                                    <label id="sizeLabel" class="sizeLabel" data-tooltip="Size">
                                         <img class="sizeDot" src="assets/dot1.svg" alt="sizeDot">
-                                        <span class="tooltips">Size</span></label>
+<!--                                        <span class="tooltips">Size</span>-->
+                                    </label>
 
 
 
@@ -201,9 +202,9 @@
 
                                 </div>
                                 <div class="opacityControl">
-                                    <label id="opacityLabel" class="opacityLabel">
+                                    <label id="opacityLabel" class="opacityLabel" data-tooltip="Opacity">
                                         <img class="opacityDot" src="assets/dot2.svg" alt="opacityDot">
-                                        <span class="tooltips">Opacity</span>
+<!--                                        <span class="tooltips">Opacity</span>-->
                                     </label>
 
 
@@ -235,7 +236,7 @@
     </div>
 
 
-
+<div class="globalTooltip" id="globalTooltip"></div>
 
 
 </main>

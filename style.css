@@ -85,6 +85,11 @@ but I try to keep the texture of the paper box */
   .saveToBrush img {
     filter: invert(1);
   }
+
+  /*.globalTooltip {*/
+  /*    background-color: var(--col08);*/
+  /*    color: var(--col01);*/
+  /*}*/
 }
 
 
@@ -1170,23 +1175,24 @@ transition: transform 0.2s ease;
 This way, the text does not take up space in the layout,
 and it can provide a bit of description to ensure that the entire interface presents more information
 in a way that is concise, icon-based, and intuitive.*/
-.tooltips{
-position: absolute;
-  bottom: 110%;
-  left: 50%;
-  transform: translateX(-50%);
+.globalTooltip{
+position: fixed;
+  /*bottom: 110%;*/
+  /*left: 50%;*/
+  transform: translateX(-50%, -120%);
   background:var(--col08);
   color: var(--col01);
   padding: 0.2rem 0.5rem;
 
   font-size: 0.7rem;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 
   opacity: 0;
   pointer-events: none;
-  transition: 0.15s;
+  transition: opacity 0.15s;
   background-image: url("assets/paperTexture.png");
   border-radius: 0.2rem;
+    z-index: 99999;
 }
 
 button:hover .tooltips{
