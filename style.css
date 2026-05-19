@@ -289,14 +289,16 @@ dialog button:hover {
   margin-bottom:0.8rem;
 }
 .guideShortcuts p{
-  margin-bottom: 0.3rem;
+    display:grid;
+    grid-template-columns: 5rem 1fr;
+    column-gap:1.5rem;
 }
 
-.guideShortcuts span{
-  display: inline-block;
-  min-width: 4rem;
-  font-weight: bold;
-}
+/*.guideShortcuts span{*/
+/*  display: inline-block;*/
+/*  min-width: 4rem;*/
+/*  font-weight: bold;*/
+/*}*/
 
 .startGuide img{
     width: 20%;
