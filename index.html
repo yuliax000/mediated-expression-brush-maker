@@ -13,12 +13,22 @@
 <main>
 
     <dialog class="startGuide" id="startGuide">
-        <!--    I use question and a set of procedures to guide users explore my tool-->
-        <!--I think the question can arouse their curiosity.-->
+        <!--    I primitively use question and a set of procedures to guide users explore my tool-->
+        <!--I thought the question can arouse their curiosity.-->
         <!--    And these steps can guide their first step of exploration.-->
+
         <!--    <p>How to get your brush evolve?</p>-->
 
-        <p>Welcome! Try clicking “Evolve”
+        <!--    After receiving some feedback, I decided to use more friendly wording and replaced the step-by-step instructions with a paragraph.
+        I initially thought that a series of procedures would make it clearer for users to understand what to do,
+         but this conflicted with my intention of encouraging exploration.
+        In this paragraph, I only provide some friendly suggestions.-->
+
+
+
+        <img src="assets/smile.png" alt="smileImg">
+
+        <p>Welcome! Try clicking "Evolve"
             and drawing a simple shape on the canvas to see how the brush changes over time.
             You can adjust the sliders, experiment freely, and discover unexpected textures
             and forms as you create your own evolving brushes and artwork.</p>
@@ -27,20 +37,18 @@
 
     <!--    I still hope that users can discover the interesting aspects of the website through exploration,
      so I didn't describe the website's logic overly clear.
-    In the pop-up dialog, I have set a series of operation steps to initiate their first attempt.
     I change the word "generative" to "evolve" because I feel it's more intuitive and easy to understand -->
     <!--In the guide, I also encourage them to try the evolve mode. -->
-    <!--I set the "evolve" button to be larger in size to draw their attention.-->
-    <!-- But sadly, in the actual test,
-    there were still some people who failed to notice this button or didn't understand it.-->
+    <!--I set the "evolve" button to be larger in size to draw their attention. -->
 
 
-    <!--    I have included shortcut keys in the guide to enhance usability. -->
+    <!--    I have included shortcuts in the guide to enhance usability. -->
     <dialog class="guideDialog" id="guideDialog">
         <button id="closeGuide" class="closeGuide">✖</button>
 
         <div class="guideContent">
             <section class="guideWelcome">
+                <img src="assets/smile.png" alt="smileImg">
                 <h2>Welcome!</h2>
                 <p>Welcome! Try clicking “Evolve”
                     and drawing a simple shape on the canvas to see how the brush changes over time.
@@ -180,21 +188,27 @@
                             <div class="sliderContainer">
                                 <div class="sizeControl">
                                     <label id="sizeLabel" class="sizeLabel">
-                                        <span>●</span>
+                                        <img class="sizeDot" src="assets/dot1.svg" alt="sizeDot">
                                         <span class="tooltips">Size</span></label>
 
+
+
                                     <input type="range" id="sizeSlider" min="5" max="400" value="40">
+
+
                                     <!-- I decide to add a text showing value because that allows users changing the size precisely-->
                                     <span id="sizeValue">40</span>
 
                                 </div>
                                 <div class="opacityControl">
                                     <label id="opacityLabel" class="opacityLabel">
-                                        <span>◐</span>
+                                        <img class="opacityDot" src="assets/dot2.svg" alt="opacityDot">
                                         <span class="tooltips">Opacity</span>
                                     </label>
 
+
                                     <input type="range" id="opacitySlider" min="0" max="1" step="0.01" value="1">
+
                                     <span id="opacityValue">1</span>
                                 </div>
                             </div>
