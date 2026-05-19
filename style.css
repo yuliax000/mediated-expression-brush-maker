@@ -767,7 +767,7 @@ input[type="range"]{
 
     width:1.5rem;
 
-    height:3rem;
+    height:10%;
 
     background:transparent;
 
@@ -936,12 +936,12 @@ input[type="range"]::-moz-range-thumb{
 }
 
 .sizeControl{
-  font-size: 70%;
+  font-size: 90%;
 }
 
 
 .opacityControl{
-  font-size: 70%;
+  font-size: 90%;
 }
 
 #sizeValue ,
@@ -951,7 +951,7 @@ input[type="range"]::-moz-range-thumb{
     height:1rem;
     text-align: center;
     line-height: 1rem;
-    font-size: 65%;
+    font-size: 85%;
 }
 
 
@@ -1208,16 +1208,23 @@ button:hover .tooltips{
 /*I divided "responsive" into several sections
 because I wanted to ensure that the preview window and brush library were displayed clearly.
 On different devices, different layouts are displayed.*/
-@media(min-width: 2561px ) and (min-height: 900px){
+@media(min-width: 2560px ) and (min-height: 900px){
   .modeContainer {
     margin-bottom: 0rem;
   }
 
   .canvasContainer {
-    width: min(95vw, 1250px);
+    width: min(95vw,1300px);
 
 
   }
+
+  .toolbarContainer {
+      flex: 0 0 4.5rem;
+
+  }
+
+
 }
 
 

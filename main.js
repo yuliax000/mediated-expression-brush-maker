@@ -52,7 +52,8 @@ const exportPngBtn = document.getElementById("export");
 
 const tooltip = document.querySelector("#globalTooltip");
 
-
+const  sizeDot = document.querySelector(".sizeDot");
+const opacityDot = document.querySelector(".opacityDot");
 
 
 
@@ -378,7 +379,7 @@ window.addEventListener("keydown", function (event) {
 
 image.on("mousedown touchstart", function(){
 
-   updateCurrentBrushSource();
+    updateCurrentBrushSource();
 
     isPaint = true;
     lastPointerPosition = getScalePointer();
@@ -444,70 +445,70 @@ stage.on("mousemove touchmove", function(){
 
     if (rafId) return;
 
-  rafId = requestAnimationFrame(function(){
+    rafId = requestAnimationFrame(function(){
 
-      const pos = latestPos;
+        const pos = latestPos;
 
-      if (!pos || ! lastPointerPosition) {
-          rafId = null;
-          return;
-      }
-
-
-      if (drawMode === "brush") {
-          // 1.original manually drawing method
-          // context.globalCompositeOperation = "source-over";
-
-          // 2. using brushImage as stamp to draw
-          // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
-          stampBrush(lastPointerPosition, pos, currentBrushSource, brushSize, "draw");
-
-          lastPointerPosition = pos;
-
-      }
-      if (drawMode === "eraser") {
-          stampBrush(lastPointerPosition, pos, currentBrushSource, eraserSize, "erase");
-          // 1. original eraser
-          // context.globalCompositeOperation = "destination-out";
-          lastPointerPosition = pos;
-      }
-
-      if (drawMode === "spray") {
-          sprayLine(lastPointerPosition, pos, currentBrushSource,
-              brushSize, 100, Math.max(2, brushSize * 0.2),"draw"
-          )
-          lastPointerPosition = pos;
-      }
-
-      // 1. original manually drawing method
-      // context.beginPath();
-      //
-      // const localPos = {
-      //     x: lastPointerPosition.x - image.x(),
-      //     y: lastPointerPosition.y - image.y(),
-      // }
-      // context.moveTo(localPos.x, localPos.y);
-      // const pos = stage.getPointerPosition();
-      // const newLocalPos = {
-      //     x: pos.x - image.x(),
-      //     y: pos.y - image.y(),
-      // }
-      // context.lineTo(newLocalPos.x, newLocalPos.y);
-      // context.closePath();
-      // context.stroke();
-      //
-      lastPointerPosition = pos;
-
-      layer.batchDraw();
-
-      if (brushMode === "generative") {
-          updateBrushPreview(currentBrushSource);
-      }
-
-      rafId = null;
+        if (!pos || ! lastPointerPosition) {
+            rafId = null;
+            return;
+        }
 
 
-  })
+        if (drawMode === "brush") {
+            // 1.original manually drawing method
+            // context.globalCompositeOperation = "source-over";
+
+            // 2. using brushImage as stamp to draw
+            // context.drawImage(brushImage, pos.x - 20, pos.y - 20, 40, 40);
+            stampBrush(lastPointerPosition, pos, currentBrushSource, brushSize, "draw");
+
+            lastPointerPosition = pos;
+
+        }
+        if (drawMode === "eraser") {
+            stampBrush(lastPointerPosition, pos, currentBrushSource, eraserSize, "erase");
+            // 1. original eraser
+            // context.globalCompositeOperation = "destination-out";
+            lastPointerPosition = pos;
+        }
+
+        if (drawMode === "spray") {
+            sprayLine(lastPointerPosition, pos, currentBrushSource,
+                brushSize, 100, Math.max(2, brushSize * 0.2),"draw"
+            )
+            lastPointerPosition = pos;
+        }
+
+        // 1. original manually drawing method
+        // context.beginPath();
+        //
+        // const localPos = {
+        //     x: lastPointerPosition.x - image.x(),
+        //     y: lastPointerPosition.y - image.y(),
+        // }
+        // context.moveTo(localPos.x, localPos.y);
+        // const pos = stage.getPointerPosition();
+        // const newLocalPos = {
+        //     x: pos.x - image.x(),
+        //     y: pos.y - image.y(),
+        // }
+        // context.lineTo(newLocalPos.x, newLocalPos.y);
+        // context.closePath();
+        // context.stroke();
+        //
+        lastPointerPosition = pos;
+
+        layer.batchDraw();
+
+        if (brushMode === "generative") {
+            updateBrushPreview(currentBrushSource);
+        }
+
+        rafId = null;
+
+
+    })
 
 
 
@@ -545,7 +546,7 @@ function stampBrush(start, end, brushSource, size, mode = "draw") {
     const distance = getDistance(start, end);
     const angle = getAngle(start, end);
 
-     context.save()
+    context.save()
 
     if (mode === "erase") {
         context.globalCompositeOperation = "destination-out";
@@ -700,7 +701,7 @@ function saveBrushToLibrary(){
 
     localStorage.setItem("savedBrushes", JSON.stringify(savedBrushes));
 
-   loadBrushLibrary();
+    loadBrushLibrary();
 
 }
 
@@ -836,16 +837,16 @@ function finishStroke() {
 // When change tools, the slider will automatically change to adjust that tool.
 sizeSlider.addEventListener("input", function(){
 
-   if (drawMode === "brush" || drawMode === "spray"){
-       brushSize = Number(sizeSlider.value);
-       sizeValue.textContent = brushSize;
-   }
+    if (drawMode === "brush" || drawMode === "spray"){
+        brushSize = Number(sizeSlider.value);
+        sizeValue.textContent = brushSize;
+    }
 
-   if(drawMode === "eraser"){
-       eraserSize = Number(sizeSlider.value);
-       sizeValue.textContent = eraserSize;
-   }
-
+    if(drawMode === "eraser"){
+        eraserSize = Number(sizeSlider.value);
+        sizeValue.textContent = eraserSize;
+    }
+   updateSliderIcons();
 })
 
 
@@ -859,6 +860,7 @@ opacitySlider.addEventListener("input", function(){
         eraserOpacity = Number(opacitySlider.value);
         opacityValue.textContent = eraserOpacity;
     }
+    updateSliderIcons();
 })
 
 
@@ -867,98 +869,98 @@ opacitySlider.addEventListener("input", function(){
 
 
 // calculate the points between start and end point, then draw spray brush on these point
-    // I modified the stampBrush and stampSingle function to get spray tool.
-    // main inspiration is from https://dilshankelsen.com/adding-spray-tool-to-html5-canvas/
-    // The spray gun tool offers users more options and a richer painting experience.
+// I modified the stampBrush and stampSingle function to get spray tool.
+// main inspiration is from https://dilshankelsen.com/adding-spray-tool-to-html5-canvas/
+// The spray gun tool offers users more options and a richer painting experience.
 // I use the canvas image as the pattern for the spray gun,
 // so when the user zooms in, they can clearly see a large number of brush pattern
 // it can be used to create randomly repeating patterns.
 
-    function sprayLine(start, end, brushSource, radius, density, particleSize, mode = "draw") {
-        const distance = getDistance(start, end);
-        const angle = getAngle(start, end);
+function sprayLine(start, end, brushSource, radius, density, particleSize, mode = "draw") {
+    const distance = getDistance(start, end);
+    const angle = getAngle(start, end);
 
-        const step = Math.max(1, radius * 0.3);
+    const step = Math.max(1, radius * 0.3);
 
-        for (let z = 0; z < distance; z += step){
-            const point = {
-                x : start.x + Math.cos(angle) * z,
-                y : start.y + Math.sin(angle) * z
-            };
+    for (let z = 0; z < distance; z += step){
+        const point = {
+            x : start.x + Math.cos(angle) * z,
+            y : start.y + Math.sin(angle) * z
+        };
 
-            sprayBrush(point, brushSource, radius, density, particleSize, mode);
-            }
-        }
+        sprayBrush(point, brushSource, radius, density, particleSize, mode);
+    }
+}
 
 
-        function sprayBrush(point, brushSource, radius, density, particleSize, mode = "draw"){
-            context.save();
+function sprayBrush(point, brushSource, radius, density, particleSize, mode = "draw"){
+    context.save();
 
-            if(mode === "erase"){
-                context.globalCompositeOperation = "destination-out";
-                context.globalAlpha = eraserOpacity;
-            } else {
-                context.globalCompositeOperation = "source-over";
-                context.globalAlpha = brushOpacity;
-            }
-
-            for (let i = 0; i < density; i ++){
-
-               // random angle
-                const angle = Math.random() * Math.PI * 2;
-        //       random distance from center to the point
-                const distance = Math.random() * radius;
-
-                const x = point.x + Math.cos(angle) * distance - particleSize / 2;
-                const y = point.y + Math.sin(angle) * distance - particleSize / 2;
-
-                context. drawImage(brushSource, x, y, particleSize, particleSize);
-
-            }
-            context.restore();
-        }
-
-        // building undo/redo function
-    function saveCanvasState() {
-        undoStack.push(currentState);
-        currentState = canvas.toDataURL();
-
-        redoStack = [];
-
+    if(mode === "erase"){
+        context.globalCompositeOperation = "destination-out";
+        context.globalAlpha = eraserOpacity;
+    } else {
+        context.globalCompositeOperation = "source-over";
+        context.globalAlpha = brushOpacity;
     }
 
-    function drawDataURLToCanvas(imgDataURL){
-      let img = new Image();
-      img.addEventListener("load", function drawOnLoad(){
-          context.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < density; i ++){
 
-          context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // random angle
+        const angle = Math.random() * Math.PI * 2;
+        //       random distance from center to the point
+        const distance = Math.random() * radius;
 
-          layer.batchDraw();
+        const x = point.x + Math.cos(angle) * distance - particleSize / 2;
+        const y = point.y + Math.sin(angle) * distance - particleSize / 2;
 
-          if (brushMode === "generative"){
-              updateBrushFromCurrentCanvas();
-              currentBrushSource = brushCanvas;
-              updateBrushPreview(currentBrushSource);
-          } else {
-              updateBrushPreview(currentBrushSource);
-          }
+        context. drawImage(brushSource, x, y, particleSize, particleSize);
+
+    }
+    context.restore();
+}
+
+// building undo/redo function
+function saveCanvasState() {
+    undoStack.push(currentState);
+    currentState = canvas.toDataURL();
+
+    redoStack = [];
+
+}
+
+function drawDataURLToCanvas(imgDataURL){
+    let img = new Image();
+    img.addEventListener("load", function drawOnLoad(){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        layer.batchDraw();
+
+        if (brushMode === "generative"){
+            updateBrushFromCurrentCanvas();
+            currentBrushSource = brushCanvas;
+            updateBrushPreview(currentBrushSource);
+        } else {
+            updateBrushPreview(currentBrushSource);
+        }
 
 
 
-          // updateBrushPreview();
+        // updateBrushPreview();
 
-          img.removeEventListener("load", drawOnLoad);
+        img.removeEventListener("load", drawOnLoad);
 
-          img.remove();
-      })
+        img.remove();
+    })
     img.src = imgDataURL;
 
-    }
+}
 
-     // The undo and redo functions enhance the usability of the tool.
+// The undo and redo functions enhance the usability of the tool.
 
-     function undoState() {
+function undoState() {
     if(undoStack.length > 0){
 
         redoStack.push(currentState);
@@ -968,9 +970,9 @@ opacitySlider.addEventListener("input", function(){
 
         currentState = undoURL;
     }
-     }
+}
 
-     function redoState(){
+function redoState(){
 
     if(redoStack.length > 0){
 
@@ -982,10 +984,10 @@ opacitySlider.addEventListener("input", function(){
         currentState = redoURL;
 
     }
-     }
+}
 
 
-        // color palette function
+// color palette function
 // As an additional feature,
 // I want to make the color palette a "little surprise" for the website, adding some fun.
 // This little surprise needs to be uncontrollable,
@@ -1019,18 +1021,18 @@ defaultBrushImage.onload = function () {
 
 
 
-        // tint brush (using "source-in" to only tint the stroke)
+// tint brush (using "source-in" to only tint the stroke)
 function tintBrushCanvas(color){
     brushContext.globalCompositeOperation = "source-in";
     brushContext.fillStyle = color;
     brushContext.fillRect(0, 0, brushCanvas.width, brushCanvas.height);
 
 //     go back to source-over mode
-brushContext.globalCompositeOperation = "source-over";
+    brushContext.globalCompositeOperation = "source-over";
 
-currentBrushSource = brushCanvas;
+    currentBrushSource = brushCanvas;
 
-updateBrushPreview(currentBrushSource);
+    updateBrushPreview(currentBrushSource);
 
 
 }
@@ -1071,7 +1073,7 @@ resizeStage();
 
 
 
-        // to calculate the proportional pointer coordinates
+// to calculate the proportional pointer coordinates
 
 function getScalePointer(){
     const pointer = stage.getPointerPosition();
@@ -1083,22 +1085,61 @@ function getScalePointer(){
     };
 }
 
-        // evolving logic function
+// evolving logic function
 function evolveBrushIfNeeded(){
     if (brushMode !== "generative") return;
     if (!hasCanvasContent) return;
-        updateBrushFromCurrentCanvas();
+    updateBrushFromCurrentCanvas();
 
-        // I choose to let the color evolve with brush.
-        // click the color change button will change the color temporarily, then color evolves with canvas
-        // tintBrushCanvas(currentColor);
-        currentBrushSource = brushCanvas;
-        // stop drawing then update the preview canvas, so that users can view current brush before their next draw
-      updateBrushPreview(currentBrushSource);
+    // I choose to let the color evolve with brush.
+    // click the color change button will change the color temporarily, then color evolves with canvas
+    // tintBrushCanvas(currentColor);
+    currentBrushSource = brushCanvas;
+    // stop drawing then update the preview canvas, so that users can view current brush before their next draw
+    updateBrushPreview(currentBrushSource);
+
+}
+
+// adding function to sync the size and opacity change of two slider icon svgs.
+// This approach more intuitively shows the changes in size and opacity, making the abstract icon easier to understand.
+
+function updateSliderIcons () {
+
+    let currentSize;
+    let currentOpacity;
+
+    if (drawMode === "eraser") {
+        currentSize = eraserSize;
+        currentOpacity = eraserOpacity;
+    }
+    else{
+        currentSize = brushSize;
+        currentOpacity = brushOpacity;
+    }
+
+
+    const minSize = 5;
+    const maxSize = 400;
+
+    const minScale = 0.3;
+    const maxScale = 1.2;
+
+    const sizeScale =
+        minScale +
+        (currentSize - minSize)
+        *
+        (maxScale - minScale)
+        /
+        (maxSize - minSize);
+
+    sizeDot.style.transform =
+        `scale(${sizeScale})`;
+
+    opacityDot.style.opacity = currentOpacity;
+
 
 }
 
 
 
-
-        syncToolSliders();
+syncToolSliders();
