@@ -872,8 +872,8 @@ input[type="range"]::-moz-range-track{
 
 input[type="range"]::-moz-range-thumb{
 
-    width:1.2rem;
-    height:1.2rem;
+    width:1rem;
+    height:1rem;
 
     background:var(--col08);
 
