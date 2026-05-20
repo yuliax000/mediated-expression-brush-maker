@@ -342,18 +342,30 @@ but I found that they became a bit distracting and drew too much attention.
   border-radius: 3rem;
   /*border: solid 0.4rem var(--col06);*/
     background-image:
-            url("assets/1.svg"),
-            url("assets/2.svg"),
-            url("assets/3.svg"),
-            url("assets/4.svg"),
-            url("assets/5.svg"),
-            url("assets/6.svg"),
-            url("assets/7.svg"),
-            url("assets/8.svg"),
-            url("assets/9.svg"),
-            url("assets/10.svg"),
-            url("assets/11.svg"),
-            url("assets/12.svg"),
+    url("assets/13.png"),
+    url("assets/14.png"),
+    url("assets/15.png"),
+    url("assets/16.png"),
+    url("assets/13.png"),
+    url("assets/14.png"),
+    url("assets/15.png"),
+    url("assets/16.png"),
+    url("assets/13.png"),
+    url("assets/14.png"),
+    url("assets/15.png"),
+    url("assets/16.png"),
+            /*url("assets/1.svg"),*/
+            /*url("assets/2.svg"),*/
+            /*url("assets/3.svg"),*/
+            /*url("assets/4.svg"),*/
+            /*url("assets/5.svg"),*/
+            /*url("assets/6.svg"),*/
+            /*url("assets/7.svg"),*/
+            /*url("assets/8.svg"),*/
+            /*url("assets/9.svg"),*/
+            /*url("assets/10.svg"),*/
+            /*url("assets/11.svg"),*/
+            /*url("assets/12.svg"),*/
             url("assets/paperTexture.png");
 
     background-size:
