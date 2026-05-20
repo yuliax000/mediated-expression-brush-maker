@@ -342,61 +342,61 @@ but I found that they became a bit distracting and drew too much attention.
   border-radius: 3rem;
   /*border: solid 0.4rem var(--col06);*/
     background-image:
-            /*url("assets/1.svg"),*/
-            /*url("assets/2.svg"),*/
-            /*url("assets/3.svg"),*/
-            /*url("assets/4.svg"),*/
-            /*url("assets/5.svg"),*/
-            /*url("assets/6.svg"),*/
-            /*url("assets/7.svg"),*/
-            /*url("assets/8.svg"),*/
-            /*url("assets/9.svg"),*/
-            /*url("assets/10.svg"),*/
-            /*url("assets/11.svg"),*/
-            /*url("assets/12.svg"),*/
+            url("assets/1.svg"),
+            url("assets/2.svg"),
+            url("assets/3.svg"),
+            url("assets/4.svg"),
+            url("assets/5.svg"),
+            url("assets/6.svg"),
+            url("assets/7.svg"),
+            url("assets/8.svg"),
+            url("assets/9.svg"),
+            url("assets/10.svg"),
+            url("assets/11.svg"),
+            url("assets/12.svg"),
             url("assets/paperTexture.png");
 
     background-size:
-            /*2rem,*/
-            /*3rem,*/
-            /*4rem,*/
+            2rem,
+            3rem,
+            4rem,
 
-            /*2.5rem,*/
-            /*5rem,*/
-            /*3rem,*/
-            /*4rem,*/
+            2.5rem,
+            5rem,
+            3rem,
+            4rem,
 
-            /*4rem,*/
-            /*3rem,*/
-            /*5rem,*/
-            /*4rem,*/
+            4rem,
+            3rem,
+            5rem,
+            4rem,
 
-            /*5rem,*/
+            5rem,
 
             100%;
 
     background-repeat:
-            /*no-repeat, no-repeat, no-repeat, no-repeat,*/
-            /*no-repeat, no-repeat, no-repeat, no-repeat,*/
-            /*no-repeat, no-repeat, no-repeat, no-repeat,*/
+            no-repeat, no-repeat, no-repeat, no-repeat,
+            no-repeat, no-repeat, no-repeat, no-repeat,
+            no-repeat, no-repeat, no-repeat, no-repeat,
             repeat;
 
     background-position:
-            /*4% 2%,*/
-            /*16% 5%,*/
-            /*10% 78%,*/
+            4% 2%,
+            16% 5%,
+            10% 78%,
 
-            /*34% 14%,*/
-            /*30% 32%,*/
-            /*28% 52%,*/
-            /*32% 90%,*/
+            34% 14%,
+            30% 32%,
+            28% 52%,
+            32% 90%,
 
-            /*70% 4%,*/
-            /*92% 18%,*/
-            /*94% 42%,*/
-            /*90% 72%,*/
+            70% 4%,
+            92% 18%,
+            94% 42%,
+            90% 72%,
 
-            /*75% 99%,*/
+            75% 99%,
 
             center;
 
