@@ -719,7 +719,7 @@ function saveBrushToLibrary(){
 
 }
 
-//function to create thumbnails for brushes
+//function to create thumbnails for brush.
 
 
 function createBrushThumbnail(brushDataURL, index) {
@@ -787,6 +787,10 @@ function setBrushFromImage(brushDataURL){
 }
 
 // load the localStorage to avoid brushes disappearing after refresh the page.
+// This prevents brushes from disappearing after refreshing the page,
+// allowing users to save their progress while further lowering the psychological barrier to creating
+// — users do not need to produce a perfect artwork in a single attempt.
+
 
 function loadBrushLibrary(){
     brushLibrary.innerHTML = "";
@@ -813,6 +817,14 @@ function createDefaultBrushThumb(){
 }
 
 // slider function
+// Use sliders to control brush size and opacity, inspired by the structure of Procreate,
+// allowing users to make intuitive and smooth adjustments.
+// When there are many possible values, adjusting brush size with buttons would require too many clicks.
+// Sliders allow users to adjust a wide range of values with simple click and drag.。
+
+
+
+
 function syncToolSliders () {
     if (drawMode === "brush") {
         sizeSlider.value= brushSize;
@@ -848,6 +860,9 @@ function finishStroke() {
 }
 
 // Reference on Procreate, I only prepare two sliders so that the Interface is minimal and simple
+//Too many sliders and precise value adjustments would make the interface more complex and difficult to understand,
+// which goes against the intention of lowering the barrier to creation.
+
 // When change tools, the slider will automatically change to adjust that tool.
 //The size and opacity functions not only give users greater control over the brush,
 // but also help them observe the brush more clearly.
@@ -938,6 +953,7 @@ function sprayBrush(point, brushSource, radius, density, particleSize, mode = "d
 }
 
 // building undo/redo function
+
 function saveCanvasState() {
     undoStack.push(currentState);
     currentState = canvas.toDataURL();
