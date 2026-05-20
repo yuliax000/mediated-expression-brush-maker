@@ -325,9 +325,7 @@ Some people mentioned that they wanted the option to reopen and revisit the welc
 
 
 
-/*I originally wanted to add some random doodles to the background,
-but I found that they became a bit distracting and drew too much attention.
- In the end, I decided to keep only the paper texture background.*/
+
 /*I intended to design a clean and straightforward interface to make it easier for users to explore and interact with the tool.*/
 .stageContainer {
   background-color: var(--col03);
