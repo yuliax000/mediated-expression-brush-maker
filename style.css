@@ -56,62 +56,7 @@ but I try to keep the texture of the paper box */
 
 
 
-@media (prefers-color-scheme: dark){
-  :root {
-    --col01: white;
-    --col02: black;
-    --col03:#181923;
-    --col04: #8b7983;
-    --col05: #8080a4;
-    --col06:  #b59e90 ;
-    --col07:#333346;
-    --col08: #6f687a;
-    /*--border: solid 0.2rem var(--col06);*/
 
-    --border: 0.18rem solid #2b2b2b;
-  }
-  .toolbarContainer img {
-    filter: invert(1);
-  }
-  .previewTitle img {
-    filter: invert(1);
-  }
-  .libraryTitle img{
-    filter: invert(1);
-}
-  .modeContainer img {
-    filter: invert(1);
-  }
-  .saveContainer img {
-    filter: invert(1);
-  }
-  .saveToBrush img {
-    filter: invert(1);
-  }
-
-  .stageContainer{
-      background-image:
-              url("assets/13-dark.png"),
-              url("assets/14-dark.png"),
-              url("assets/15-dark.png"),
-              url("assets/16-dark.png"),
-              url("assets/13-dark.png"),
-              url("assets/14-dark.png"),
-              url("assets/15-dark.png"),
-              url("assets/16-dark.png"),
-              url("assets/13-dark.png"),
-              url("assets/14-dark.png"),
-              url("assets/15-dark.png"),
-              url("assets/16-dark.png"),
-              url("assets/paperTexture.png");
-
-  }
-
-  /*.globalTooltip {*/
-  /*    background-color: var(--col08);*/
-  /*    color: var(--col01);*/
-  /*}*/
-}
 
 
 /*Paper texture helps to improve the playfulness and feeling of drawing on the paper.
@@ -1668,7 +1613,61 @@ On different devices, different layouts are displayed.*/
 
 
 
+@media (prefers-color-scheme: dark){
+    :root {
+        --col01: white;
+        --col02: black;
+        --col03:#181923;
+        --col04: #8b7983;
+        --col05: #8080a4;
+        --col06:  #b59e90 ;
+        --col07:#333346;
+        --col08: #6f687a;
+        /*--border: solid 0.2rem var(--col06);*/
 
+        --border: 0.18rem solid #2b2b2b;
+    }
+    .toolbarContainer img {
+        filter: invert(1);
+    }
+    .previewTitle img {
+        filter: invert(1);
+    }
+    .libraryTitle img{
+        filter: invert(1);
+    }
+    .modeContainer img {
+        filter: invert(1);
+    }
+    .saveContainer img {
+        filter: invert(1);
+    }
+    .saveToBrush img {
+        filter: invert(1);
+    }
+
+    .stageContainer{
+        background-image:
+                url("assets/13-dark.png"),
+                url("assets/14-dark.png"),
+                url("assets/15-dark.png"),
+                url("assets/16-dark.png"),
+                url("assets/13-dark.png"),
+                url("assets/14-dark.png"),
+                url("assets/15-dark.png"),
+                url("assets/16-dark.png"),
+                url("assets/13-dark.png"),
+                url("assets/14-dark.png"),
+                url("assets/15-dark.png"),
+                url("assets/16-dark.png"),
+                url("assets/paperTexture.png");
+    }
+
+    /*.globalTooltip {*/
+    /*    background-color: var(--col08);*/
+    /*    color: var(--col01);*/
+    /*}*/
+}
 
 
 
