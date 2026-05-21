@@ -592,6 +592,7 @@ button:active {
   flex-direction: column;
   background-color: var(--col07);
   border-radius: 1rem;
+    align-self:flex-start;
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background-image:  url("assets/paperTexture.png");
@@ -798,7 +799,7 @@ input[type="range"]{
 
     width:1.5rem;
 
-    height:10%;
+    height:9%;
 
     background:transparent;
 
